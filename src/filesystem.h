@@ -27,6 +27,24 @@
  ***** Custom Types *****
  ************************/
 
+typedef struct {
+	void *value;
+	LLNode *next;
+} LLNode;
+
+typedef struct {
+	void *value;
+	TreeNode *childRight;
+	TreeNode *childLeft;
+} TreeNode;
+
+typedef struct {
+	char *name;
+	char *value;
+	TreeNode *children;
+	TreeNode *abcChildren;
+} FSNode;
+
 /*********************
  ***** Functions *****
  *********************/
