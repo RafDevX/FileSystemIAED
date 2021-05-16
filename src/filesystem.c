@@ -9,18 +9,18 @@
 
 /* Master logic: start up, read a command key and send it to triage */
 int main() {
-	State state;
+	FSNode *root;
 	char cmd;
 	/* TODO: startup */
 
 	while ((cmd = getchar()) != CMD_QUIT && cmd != EOF)
-		if (!triage(&state, cmd))
+		if (!triage(root, cmd))
 			return RETCODE_UNKNOWN_CMD;
 
 	return RETCODE_OK;
 }
 
 /* Call the appropriate function for a command. Return whether it succeeded. */
-int triage(State *state, char cmd) {
+int triage(FSNode *root, char cmd) {
 	/* */
 }

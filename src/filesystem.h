@@ -41,8 +41,8 @@ typedef struct {
 typedef struct {
 	char *name;
 	char *value;
-	TreeNode *children;
-	TreeNode *abcChildren;
+	LLNode *children;
+	TreeNode *abcChildren; /* children, but ordered alphabetically */
 } FSNode;
 
 /*********************
