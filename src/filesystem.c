@@ -10,17 +10,20 @@
 /* Master logic: start up, read a command key and send it to triage */
 int main() {
 	FSNode *root;
-	char cmd;
+	char cmd[MAX_CMD_LENGTH];
 	/* TODO: startup */
 
-	while ((cmd = getchar()) != CMD_QUIT && cmd != EOF)
+	while (scanf("%s", cmd) && isValidChar(cmd[0]) && !strcmp(cmd, CMD_QUIT))
 		if (!triage(root, cmd))
 			return RETCODE_UNKNOWN_CMD;
+
+	/* call cleanup function */
 
 	return RETCODE_OK;
 }
 
 /* Call the appropriate function for a command. Return whether it succeeded. */
-int triage(FSNode *root, char cmd) {
+int triage(FSNode *root, char cmd[]) {
 	/* */
+	return 1;
 }

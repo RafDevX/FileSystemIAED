@@ -16,6 +16,7 @@
 
 /*** Commands ***/
 
+#define MAX_CMD_LENGTH 6
 #define CMD_QUIT "quit"
 
 /*** Return Codes ***/
@@ -27,15 +28,15 @@
  ***** Custom Types *****
  ************************/
 
-typedef struct {
+typedef struct LLN {
 	void *value;
-	LLNode *next;
+	struct LLN *next;
 } LLNode;
 
-typedef struct {
+typedef struct TN {
 	void *value;
-	TreeNode *childRight;
-	TreeNode *childLeft;
+	struct TN *childRight;
+	struct TN *childLeft;
 } TreeNode;
 
 typedef struct {
@@ -48,3 +49,13 @@ typedef struct {
 /*********************
  ***** Functions *****
  *********************/
+
+/* Auxiliary */
+
+int isValidChar(char c);
+
+/* Commands */
+
+/* General */
+
+int triage(FSNode *root, char cmd[]);
