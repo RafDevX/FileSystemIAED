@@ -10,3 +10,7 @@
 int isValidChar(char c) {
 	return c != '\0' && c != EOF;
 }
+
+int isTruthy(void *v) {
+	return !!*v;
+}

@@ -28,16 +28,28 @@
  ***** Custom Types *****
  ************************/
 
-typedef struct LLN {
-	void *value;
-	struct LLN *next;
-} LLNode;
+/* Doubly-Linked Lists */
 
-typedef struct TN {
+typedef struct DLLN {
 	void *value;
-	struct TN *childRight;
-	struct TN *childLeft;
-} TreeNode;
+	struct DLLN *prev;
+	struct DLLN *next;
+} DLLNode;
+
+typedef struct {
+	DLLNode *head;
+	DLLNode *tail;
+} DLL;
+
+/* AVL Trees */
+
+typedef struct AVLN {
+	void *value;
+	struct TN *right;
+	struct TN *left;
+} AVLNode;
+
+/* FileSystem Node */
 
 typedef struct {
 	char *name;
@@ -53,6 +65,7 @@ typedef struct {
 /* Auxiliary */
 
 int isValidChar(char c);
+int isTruthy(void *v);
 
 /* Commands */
 

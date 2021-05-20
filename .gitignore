@@ -5,3 +5,4 @@ filesystem.zip
 
 .vscode/
 .wakatime-project
+*.swp
