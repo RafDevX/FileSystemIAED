@@ -45,6 +45,7 @@ typedef struct {
 
 typedef struct AVLN {
 	void *value;
+	int height;
 	struct TN *right;
 	struct TN *left;
 } AVLNode;
@@ -54,8 +55,8 @@ typedef struct AVLN {
 typedef struct {
 	char *name;
 	char *value;
-	LLNode *children;
-	TreeNode *abcChildren; /* children, but ordered alphabetically */
+	DLL *children;
+	AVLNode *abcChildren; /* children, but ordered alphabetically */
 } FSNode;
 
 /*********************
