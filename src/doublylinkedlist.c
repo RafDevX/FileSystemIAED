@@ -9,7 +9,7 @@
 
 DLLNode *newDLLNode() {
 	DLLNode *new = (DLLNode *)malloc(sizeof(DLLNode));
-	new->prev = NULL;	
+	new->prev = NULL;
 	new->next = NULL;
 	new->value = NULL;
 	return new;
@@ -29,15 +29,15 @@ void setValueDLLNode(DLLNode *node, void *val) {
 
 DLL *newDLL() {
 	DLL *new = (DLL *)malloc(sizeof(DLL));
-	DLL->head = NULL;
-	DLL->tail = NULL;
+	new->head = NULL;
+	new->tail = NULL;
 	return new;
 }
 
 DLLNode *pushDLL(DLL *lst, void *value) {
 	DLLNode *node = newDLLNode();
 	node->value = value;
-	if (lst->head) { 
+	if (lst->head) {
 		(lst->tail)->next = node;
 		node->prev = lst->tail;
 	} else {
@@ -47,7 +47,7 @@ DLLNode *pushDLL(DLL *lst, void *value) {
 	return node;
 }
 
-void removeDLL(DLL *lst, int (*shouldRemoveNode)(void*), int onlyFirst) {
+void removeDLL(DLL *lst, int (*shouldRemoveNode)(void *), int onlyFirst) {
 	DLLNode *aux, *node = lst->head;
 	while (node) {
 		if (shouldRemoveNode(node->value)) {
@@ -69,5 +69,5 @@ void removeDLL(DLL *lst, int (*shouldRemoveNode)(void*), int onlyFirst) {
 
 void freeDLL(DLL *lst) {
 	removeDLL(lst, &isTruthy, 0);
-	free(DLL);
+	free(lst);
 }
