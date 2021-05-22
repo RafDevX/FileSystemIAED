@@ -77,6 +77,14 @@ Dir *findDir(Dir *root, DLL *path, int createIfMissing) {
 	return findDir(dir, path, createIfMissing);
 }
 
+void listAbcChildrenDir(Dir *dir) {
+	traverseAVL(dir->abcChildren, IN_ORDER, printChildDir);
+}
+
+void printChildDir(void *c) {
+	printf("%s\n", ((Dir *)c)->name);
+}
+
 int cmpValuesDir(void *a, void *b) {
 	char *v1 = ((Dir *)a)->value, *v2 = ((Dir *)b)->value;
 	if (v1 == NULL)
