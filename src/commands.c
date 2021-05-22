@@ -14,7 +14,15 @@ void cmdHelp() {
 		printf("%s\n", lines[i]);
 }
 
-/* set */
+void cmdSet(Dir *root, char args[]) {
+	char path[MAX_PATH_LEN];
+	Dir *dir;
+	DLL *pathList;
+	sscanf(args, "%s", path);
+	pathList = strToDLL(path, PATH_SEPARATOR);
+	dir = findDir(root, pathList, 1);
+	setValueDir(dir, args + strlen(path) + 1);
+}
 
 void cmdPrint(Dir *root) {
 	printDir(root);

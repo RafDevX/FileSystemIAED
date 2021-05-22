@@ -60,6 +60,25 @@ void removeDLL(DLL *lst, void *val, int onlyFirst, void (*freeValue)(void *)) {
 	}
 }
 
+void *shiftDLL(DLL *lst) {
+	DLLNode *item = lst->head;
+	void *val = item->value;
+	lst->head = item->next;
+	(item->next)->prev = item->prev;
+	if (item == lst->tail)
+		lst->tail = NULL;
+	free(item);
+	return val;
+}
+
+void *firstMatchingDLL(DLL *lst, void *value, int (*matches)(void *, void *)) {
+	DLLNode *head = lst->head;
+	while (head)
+		if (matches(value, head->value))
+			return head->value;
+	return NULL;
+}
+
 void traverseDLL(DLL *lst, void (*f)(void *), int freeNodes) {
 	if (lst != NULL) {
 		DLLNode *next, *head = lst->head;
@@ -74,7 +93,19 @@ void traverseDLL(DLL *lst, void (*f)(void *), int freeNodes) {
 	}
 }
 
-void freeDLL(DLL *lst) {
-	if (lst != NULL) {
+int emptyDLL(DLL *lst) {
+	return lst->head == NULL;
+}
+
+DLL *strToDLL(char str[], char delim[]) {
+	char *token;
+	DLL *lst = newDLL();
+
+	token = strtok(str, delim);
+	while (token != NULL) {
+		pushDLL(lst, strdup(token));
+		token = strtok(NULL, delim);
 	}
+
+	return lst;
 }

@@ -109,7 +109,11 @@ void setValueDLLNode(DLLNode *node, void *val);
 DLL *newDLL();
 DLLNode *pushDLL(DLL *lst, void *value);
 void removeDLL(DLL *lst, void *val, int onlyFirst, void (*freeValue)(void *));
+void *shiftDLL(DLL *lst);
+void *firstMatchingDLL(DLL *lst, void *value, int (*matches)(void *, void *));
 void traverseDLL(DLL *lst, void (*f)(void *), int freeNodes);
+int emptyDLL(DLL *lst);
+DLL *strToDLL(char str[], char delim[]);
 
 AVLNode *newAVLNode(void *value);
 void setValueAVLNode(AVLNode *node, void *value);
@@ -129,13 +133,15 @@ void traverseAVL(AVLNode *root, enum AVLTraversalType type, void (*f)(void *));
 void *searchAVL(AVLNode *root, void *key, int (*cmp)(void *, void *));
 
 Dir *newDir(char name[]);
-int cmpValuesDir(void *a, void *b);
 Dir *newChildDir(Dir *parent, char name[]);
 void setValueDir(Dir *dir, char value[]);
 void deleteDir(Dir *dir, Dir *parent);
 void deleteDirWrapper(void *value);
 void printDir(Dir *dir);
 void printDirWrapper(void *value);
+Dir *findDir(Dir *root, DLL *path, int createIfMissing);
+int cmpValuesDir(void *a, void *b);
+int matchesNameDir(void *a, void *b);
 
 /* Auxiliary */
 
