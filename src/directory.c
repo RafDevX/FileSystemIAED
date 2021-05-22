@@ -9,7 +9,7 @@
 
 Dir *newDir(char name[]) {
 	Dir *new = (Dir *)malloc(sizeof(Dir));
-	new->name = name;
+	new->name = strdup(name);
 	new->value = NULL;
 	new->children = newDLL();
 	new->abcChildren = NULL;
