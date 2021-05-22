@@ -77,7 +77,7 @@ Dir *findDir(Dir *root, DLL *path, int createIfMissing) {
 }
 
 int cmpValuesDir(void *a, void *b) {
-	Dir *v1 = ((Dir *)a)->value, *v2 = ((Dir *)b)->value;
+	char *v1 = ((Dir *)a)->value, *v2 = ((Dir *)b)->value;
 	if (v1 == NULL)
 		return -1;
 	else if (v2 == NULL)

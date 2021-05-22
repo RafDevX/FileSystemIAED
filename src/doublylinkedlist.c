@@ -64,7 +64,8 @@ void *shiftDLL(DLL *lst) {
 	DLLNode *item = lst->head;
 	void *val = item->value;
 	lst->head = item->next;
-	(item->next)->prev = item->prev;
+	if (item->next)
+		(item->next)->prev = item->prev;
 	if (item == lst->tail)
 		lst->tail = NULL;
 	free(item);
