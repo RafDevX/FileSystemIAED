@@ -15,15 +15,7 @@ DLLNode *newDLLNode() {
 	return new;
 }
 
-void freeValueDLLNode(DLLNode *node) {
-	if (node->value != NULL) {
-		free(node->value);
-		node->value = NULL;
-	}
-}
-
 void setValueDLLNode(DLLNode *node, void *val) {
-	freeValueDLLNode(node);
 	node->value = val;
 }
 
@@ -47,7 +39,8 @@ DLLNode *pushDLL(DLL *lst, void *value) {
 	return node;
 }
 
-void removeDLL(DLL *lst, int (*shouldRemoveNode)(void *), int onlyFirst) {
+void removeDLL(DLL *lst, int (*shouldRemoveNode)(void *), int onlyFirst,
+			   void (*freeValue)(void *)) {
 	DLLNode *aux, *node = lst->head;
 	while (node) {
 		if (shouldRemoveNode(node->value)) {
@@ -55,7 +48,8 @@ void removeDLL(DLL *lst, int (*shouldRemoveNode)(void *), int onlyFirst) {
 				(node->prev)->next = node->next;
 			if (node->next)
 				(node->next)->prev = node->prev;
-			freeValueDLLNode(node);
+			if (freeValue)
+				freeValue(node->value);
 			aux = node->next;
 			free(node);
 			if (onlyFirst)
@@ -65,9 +59,4 @@ void removeDLL(DLL *lst, int (*shouldRemoveNode)(void *), int onlyFirst) {
 			node = node->next;
 		}
 	}
-}
-
-void freeDLL(DLL *lst) {
-	removeDLL(lst, &isTruthy, 0);
-	free(lst);
 }

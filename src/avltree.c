@@ -1,7 +1,7 @@
 /*
  *	File: avltree.c
  *	Author: Rafael Serra e Oliveira (ist199311)
- *	Description: Handler functions for the AVL Tree  structure
+ *	Description: Handler functions for the AVL Tree structure
 */
 
 /*** Include project header file ***/
@@ -14,13 +14,6 @@ AVLNode *newAVLNode(void *value) {
 	new->value = value;
 	new->height = 1;
 	return new;
-}
-
-void freeValueAVLNode(AVLNode *node) {
-	if (node->value) {
-		free(node->value);
-		node->value = NULL;
-	}
 }
 
 void setValueAVLNode(AVLNode *node, void *value) {
@@ -120,7 +113,7 @@ AVLNode *insertAVLNode(AVLNode *root, void *value, int (*cmp)(void *, void *)) {
 }
 
 AVLNode *removeAVLNode(AVLNode *root, void *rem, int (*cmp)(void *, void *),
-					   int freeValue) {
+					   void (*freeValue)(void *)) {
 	/*
 		cmp(rem, A) == 0  <=>  ToRemove == A
 		cmp(rem, A) == 1  <=>  ToRemove > A
@@ -149,8 +142,8 @@ AVLNode *removeAVLNode(AVLNode *root, void *rem, int (*cmp)(void *, void *),
 				root = root->left;
 			else
 				root = root->right;
-			if (freeValue)
-				freeValueAVLNode(aux);
+			if (freeValue != NULL)
+				freeValue(aux->value);
 			free(aux);
 		}
 	}

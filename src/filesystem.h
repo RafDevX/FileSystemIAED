@@ -28,7 +28,7 @@
  ***** Custom Types *****
  ************************/
 
-/* Doubly-Linked Lists */
+/* Doubly-Linked List */
 
 typedef struct DLLN {
 	void *value;
@@ -41,7 +41,7 @@ typedef struct {
 	DLLNode *tail;
 } DLL;
 
-/* AVL Trees */
+/* AVL Tree */
 
 typedef struct AVLN {
 	void *value;
@@ -50,14 +50,14 @@ typedef struct AVLN {
 	struct AVLN *left;
 } AVLNode;
 
-/* FileSystem Node */
+/* Directory */
 
 typedef struct {
 	char *name;
 	char *value;
 	DLL *children;
 	AVLNode *abcChildren; /* children, but ordered alphabetically */
-} FSNode;
+} Dir;
 
 /*****************
  ***** Enums *****
@@ -76,7 +76,6 @@ enum AVLTraversalType {
 /* Interfaces */
 
 AVLNode *newAVLNode(void *value);
-void freeValueAVLNode(AVLNode *node);
 void setValueAVLNode(AVLNode *node, void *value);
 AVLNode *maxAVLNode(AVLNode *root);
 int getHeightAVLNode(AVLNode *node);
@@ -89,7 +88,7 @@ int calcBalanceAVLNode(AVLNode *node);
 AVLNode *balanceAVL(AVLNode *root);
 AVLNode *insertAVLNode(AVLNode *root, void *value, int (*cmp)(void *, void *));
 AVLNode *removeAVLNode(AVLNode *root, void *rem, int (*cmp)(void *, void *),
-					   int freeValue);
+					   void (*freeValue)(void *));
 void traverseAVL(AVLNode *root, enum AVLTraversalType type, void (*f)(void *));
 void *searchAVL(AVLNode *root, void *key, int (*cmp)(void *, void *));
 
@@ -102,4 +101,4 @@ int isTruthy(void *v);
 
 /* General */
 
-int triage(FSNode *root, char cmd[]);
+int triage(Dir *root, char cmd[]);
