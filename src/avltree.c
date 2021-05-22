@@ -159,19 +159,19 @@ AVLNode *removeAVLNode(AVLNode *root, void *rem, int (*cmp)(void *, void *),
 }
 
 void traverseAVL(AVLNode *root, enum AVLTraversalType type, void (*f)(void *)) {
-	if (root != NULL) {
-		if (type == PRE_ORDER) {
-			f(root);
-			traverseAVL(root->left, type, f);
-			traverseAVL(root->right, type, f);
-		} else if (type == IN_ORDER) {
-			traverseAVL(root->left, type, f);
-			f(root);
-			traverseAVL(root->right, type, f);
-		} else if (type == POST_ORDER) {
-			traverseAVL(root->left, type, f);
-			traverseAVL(root->right, type, f);
-			f(root);
-		}
+	if (root == NULL) {
+		return;
+	} else if (type == PRE_ORDER) {
+		f(root->value);
+		traverseAVL(root->left, type, f);
+		traverseAVL(root->right, type, f);
+	} else if (type == IN_ORDER) {
+		traverseAVL(root->left, type, f);
+		f(root->value);
+		traverseAVL(root->right, type, f);
+	} else if (type == POST_ORDER) {
+		traverseAVL(root->left, type, f);
+		traverseAVL(root->right, type, f);
+		f(root->value);
 	}
 }
