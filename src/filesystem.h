@@ -63,9 +63,11 @@ typedef struct {
  ***** Enums *****
  *****************/
 
-enum AVLTraversalType { PRE_ORDER,
-						IN_ORDER,
-						POST_ORDER };
+enum AVLTraversalType {
+	PRE_ORDER,
+	IN_ORDER,
+	POST_ORDER
+};
 
 /*********************
  ***** Functions *****
@@ -89,6 +91,7 @@ AVLNode *insertAVLNode(AVLNode *root, void *value, int (*cmp)(void *, void *));
 AVLNode *removeAVLNode(AVLNode *root, void *rem, int (*cmp)(void *, void *),
 					   int freeValue);
 void traverseAVL(AVLNode *root, enum AVLTraversalType type, void (*f)(void *));
+void *searchAVL(AVLNode *root, void *key, int (*cmp)(void *, void *));
 
 /* Auxiliary */
 

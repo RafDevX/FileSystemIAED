@@ -24,7 +24,6 @@ void freeValueAVLNode(AVLNode *node) {
 }
 
 void setValueAVLNode(AVLNode *node, void *value) {
-	freeValueAVLNode(node);
 	node->value = value;
 }
 
@@ -174,4 +173,17 @@ void traverseAVL(AVLNode *root, enum AVLTraversalType type, void (*f)(void *)) {
 		traverseAVL(root->right, type, f);
 		f(root->value);
 	}
+}
+
+void *searchAVL(AVLNode *root, void *key, int (*cmp)(void *, void *)) {
+	int c;
+	if (root == NULL)
+		return root;
+	c = cmp(key, root->value);
+	if (c < 0)
+		return searchAVL(root->left, key, cmp);
+	else if (c > 0)
+		return searchAVL(root->right, key, cmp);
+	else
+		return root->value;
 }
