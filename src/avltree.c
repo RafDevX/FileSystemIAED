@@ -153,7 +153,7 @@ AVLNode *removeAVLNode(AVLNode *root, void *rem, int (*cmp)(void *, void *),
 	return balanceAVL(root);
 }
 
-void *traverseAVL(AVLNode *root, enum AVLTraversalType type, void (*f)(void *)) {
+void traverseAVL(AVLNode *root, enum AVLTraversalType type, void (*f)(void *)) {
 	if (root != NULL) {
 		if (type == PRE_ORDER) {
 			f(root);

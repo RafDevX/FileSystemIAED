@@ -12,5 +12,5 @@ int isValidChar(char c) {
 }
 
 int isTruthy(void *v) {
-	return !!*v;
+	return !!v;
 }

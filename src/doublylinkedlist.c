@@ -23,7 +23,7 @@ void freeValueDLLNode(DLLNode *node) {
 }
 
 void setValueDLLNode(DLLNode *node, void *val) {
-	freeValueDLL(node);
+	freeValueDLLNode(node);
 	node->value = val;
 }
 

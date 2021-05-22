@@ -46,8 +46,8 @@ typedef struct {
 typedef struct AVLN {
 	void *value;
 	int height;
-	struct TN *right;
-	struct TN *left;
+	struct AVLN *right;
+	struct AVLN *left;
 } AVLNode;
 
 /* FileSystem Node */
@@ -88,7 +88,7 @@ AVLNode *balanceAVL(AVLNode *root);
 AVLNode *insertAVLNode(AVLNode *root, void *value, int (*cmp)(void *, void *));
 AVLNode *removeAVLNode(AVLNode *root, void *rem, int (*cmp)(void *, void *),
 					   int freeValue);
-void *traverseAVL(AVLNode *root, enum AVLTraversalType type, void (*f)(void *));
+void traverseAVL(AVLNode *root, enum AVLTraversalType type, void (*f)(void *));
 
 /* Auxiliary */
 
