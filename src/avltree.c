@@ -87,7 +87,7 @@ AVLNode *rotRightLeftAVLNode(AVLNode *node) {
 int calcBalanceAVLNode(AVLNode *node) {
 	if (node == NULL)
 		return 0;
-	return calcHeightAVLNode(node->left) - calcHeightAVLNode(node->right);
+	return getHeightAVLNode(node->left) - getHeightAVLNode(node->right);
 }
 
 AVLNode *balanceAVL(AVLNode *root) {
@@ -99,7 +99,12 @@ AVLNode *balanceAVL(AVLNode *root) {
 		if (calcBalanceAVLNode(root->left) >= 0)
 			root = rotRightAVLNode(root);
 		else
+			root = rotLeftRightAVLNode(root);
+	else if (balance < -1)
+		if (calcBalanceAVLNode(root->right) <= 0)
 			root = rotLeftAVLNode(root);
+		else
+			root = rotRightLeftAVLNode(root);
 	else
 		root->height = calcHeightAVLNode(root);
 	return root;
