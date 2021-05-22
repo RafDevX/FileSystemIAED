@@ -11,6 +11,8 @@ int isValidChar(char c) {
 	return c != '\0' && c != EOF;
 }
 
-int isTruthy(void *v) {
-	return !!v;
+char *strdup(char s1[]) {
+	char *s2 = (char *)malloc(sizeof(char) * (strlen(s1) + 1));
+	strcpy(s2, s1);
+	return s2;
 }
