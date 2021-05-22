@@ -62,4 +62,12 @@ void cmdSearch(Dir *root, char value[]) {
 	free(path);
 }
 
-/*void cmdDelete(Dir *root, char path[]);*/
+void cmdDelete(Dir *root, char path[]) {
+	DLL *pathList = strToDLL(path, PATH_SEPARATOR);
+	Dir *dir = findDir(root, pathList, 0);
+	if (dir == NULL)
+		printf("%s\n", ERR_NOT_FOUND);
+	else
+		deleteDir(dir);
+	free(pathList);
+}

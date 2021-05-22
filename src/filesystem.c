@@ -22,7 +22,7 @@ int main() {
 			return RETCODE_UNKNOWN_CMD;
 	}
 
-	deleteDir(root, NULL);
+	deleteDir(root);
 
 	return RETCODE_OK;
 }
@@ -42,7 +42,7 @@ int triage(Dir *root, char cmd[], char args[]) {
 	else if (strcmp(cmd, CMD_SEARCH) == 0)
 		cmdSearch(root, args);
 	else if (strcmp(cmd, CMD_DELETE) == 0)
-		return 999;
+		cmdDelete(root, args);
 	else
 		return 0;
 	return 1;

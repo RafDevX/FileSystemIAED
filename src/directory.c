@@ -13,6 +13,7 @@ Dir *newDir(char name[]) {
 	new->value = NULL;
 	new->children = newDLL();
 	new->abcChildren = NULL;
+	new->parent = NULL;
 	return new;
 }
 
@@ -25,16 +26,17 @@ void setValueDir(Dir *dir, char value[]) {
 
 Dir *newChildDir(Dir *parent, char name[]) {
 	Dir *new = newDir(name);
+	new->parent = parent;
 	pushDLL(parent->children, new);
 	parent->abcChildren = insertAVLNode(parent->abcChildren, new, cmpValuesDir);
 	return new;
 }
 
-void deleteDir(Dir *dir, Dir *parent) {
+void deleteDir(Dir *dir) {
 	traverseDLL(dir->children, deleteDirWrapper, 1);
 	traverseAVL(dir->abcChildren, FREE, NULL);
-	if (parent) {
-		removeDLL(parent->children, dir, 1, NULL);
+	if (dir->parent) {
+		removeDLL(dir->parent->children, dir, 1, NULL);
 	}
 	free(dir->children);
 	free(dir->value);
@@ -43,7 +45,7 @@ void deleteDir(Dir *dir, Dir *parent) {
 }
 
 void deleteDirWrapper(void *value) {
-	deleteDir((Dir *)value, NULL);
+	deleteDir((Dir *)value);
 }
 
 void printDir(Dir *dir) { /* FIXME: */

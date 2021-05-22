@@ -85,11 +85,12 @@ typedef struct AVLN {
 
 /* Directory */
 
-typedef struct {
+typedef struct DN {
 	char *name;
 	char *value;
 	DLL *children;
 	AVLNode *abcChildren; /* children, but ordered alphabetically */
+	struct DN *parent;
 } Dir;
 
 /*****************
@@ -140,7 +141,7 @@ void *searchAVL(AVLNode *root, void *key, int (*cmp)(void *, void *));
 Dir *newDir(char name[]);
 Dir *newChildDir(Dir *parent, char name[]);
 void setValueDir(Dir *dir, char value[]);
-void deleteDir(Dir *dir, Dir *parent);
+void deleteDir(Dir *dir);
 void deleteDirWrapper(void *value);
 void printDir(Dir *dir);
 void printDirWrapper(void *value);

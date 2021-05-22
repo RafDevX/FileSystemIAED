@@ -45,8 +45,12 @@ void removeDLL(DLL *lst, void *val, int onlyFirst, void (*freeValue)(void *)) {
 		if (node->value == val) {
 			if (node->prev)
 				(node->prev)->next = node->next;
+			else
+				lst->head = node->next;
 			if (node->next)
 				(node->next)->prev = node->prev;
+			else
+				lst->tail = node->prev;
 			if (freeValue)
 				freeValue(node->value);
 			aux = node->next;
