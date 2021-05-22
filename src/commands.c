@@ -15,13 +15,15 @@ void cmdHelp() {
 }
 
 void cmdSet(Dir *root, char args[]) {
-	char path[MAX_PATH_LEN];
+	char path[MAX_PATH_LEN], *value;
 	Dir *dir;
 	DLL *pathList;
 	sscanf(args, "%s", path);
+	value = args + strlen(path) + 1;
 	pathList = strToDLL(path, PATH_SEPARATOR);
 	dir = findDir(root, pathList, 1);
-	setValueDir(dir, args + strlen(path) + 1);
+	setValueDir(dir, value);
+	free(pathList);
 }
 
 void cmdPrint(Dir *root) {

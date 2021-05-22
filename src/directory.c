@@ -73,6 +73,7 @@ Dir *findDir(Dir *root, DLL *path, int createIfMissing) {
 	if (dir == NULL && createIfMissing) {
 		dir = newChildDir(root, cur);
 	}
+	free(cur);
 	return findDir(dir, path, createIfMissing);
 }
 
