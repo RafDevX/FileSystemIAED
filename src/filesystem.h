@@ -59,9 +59,36 @@ typedef struct {
 	AVLNode *abcChildren; /* children, but ordered alphabetically */
 } FSNode;
 
+/*****************
+ ***** Enums *****
+ *****************/
+
+enum AVLTraversalType { PRE_ORDER,
+						IN_ORDER,
+						POST_ORDER };
+
 /*********************
  ***** Functions *****
  *********************/
+
+/* Interfaces */
+
+AVLNode *newAVLNode(void *value);
+void freeValueAVLNode(AVLNode *node);
+void setValueAVLNode(AVLNode *node, void *value);
+AVLNode *maxAVLNode(AVLNode *root);
+int getHeightAVLNode(AVLNode *node);
+int calcHeightAVLNode(AVLNode *node);
+AVLNode *rotLeftAVLNode(AVLNode *h);
+AVLNode *rotRightAVLNode(AVLNode *h);
+AVLNode *rotLeftRightAVLNode(AVLNode *node);
+AVLNode *rotRightLeftAVLNode(AVLNode *node);
+int calcBalanceAVLNode(AVLNode *node);
+AVLNode *balanceAVL(AVLNode *root);
+AVLNode *insertAVLNode(AVLNode *root, void *value, int (*cmp)(void *, void *));
+AVLNode *removeAVLNode(AVLNode *root, void *rem, int (*cmp)(void *, void *),
+					   int freeValue);
+void *traverseAVL(AVLNode *root, enum AVLTraversalType type, void (*f)(void *));
 
 /* Auxiliary */
 

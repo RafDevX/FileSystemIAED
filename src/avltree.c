@@ -28,6 +28,13 @@ void setValueAVLNode(AVLNode *node, void *value) {
 	node->value = value;
 }
 
+AVLNode *maxAVLNode(AVLNode *root) {
+	if (root == NULL || root->right == NULL)
+		return root;
+	else
+		return maxAVLNode(root->right);
+}
+
 int getHeightAVLNode(AVLNode *node) {
 	if (node == NULL)
 		return 0;
@@ -83,7 +90,7 @@ int calcBalanceAVLNode(AVLNode *node) {
 	return calcHeightAVLNode(node->left) - calcHeightAVLNode(node->right);
 }
 
-AVLNode *balanceAVL(AVLNode *root) {
+AVLNode *balanceAVLNode(AVLNode *root) {
 	int balance;
 	if (root == NULL)
 		return root;
@@ -105,25 +112,61 @@ AVLNode *insertAVLNode(AVLNode *root, void *value, int (*cmp)(void *, void *)) {
 		root->left = insertAVLNode(root->left, value, cmp);
 	else
 		root->right = insertAVLNode(root->right, value, cmp);
-	return balanceAVL(root);
+	return balanceAVLNode(root);
 }
 
-AVLNode *removeAVLNode(AVLNode *root, int (*cmp)(void *)) {
+AVLNode *removeAVLNode(AVLNode *root, void *rem, int (*cmp)(void *, void *),
+					   int freeValue) {
 	/*
-		cmp(A) == 0  <=>  ToRemove == A
-		cmp(A) == 1  <=>  ToRemove > A
-		cmp(A) == -1 <=>  ToRemove < A
+		cmp(rem, A) == 0  <=>  ToRemove == A
+		cmp(rem, A) == 1  <=>  ToRemove > A
+		cmp(rem, A) == -1 <=>  ToRemove < A
 	*/
 	int c;
 	if (root == NULL)
 		return root;
-	c = cmp(root->value);
+	c = cmp(rem, root->value);
 	if (c < 0) {
-		root->left = removeAVLNode(root->left, cmp);
+		root->left = removeAVLNode(root->left, rem, cmp, freeValue);
 	} else if (c > 0) {
-		root->right = removeAVLNode(root->right, cmp);
+		root->right = removeAVLNode(root->right, rem, cmp, freeValue);
 	} else {
-		/* TODO: finish this */
+		if (root->right != NULL && root->left != NULL) {
+			AVLNode *max = maxAVLNode(root->left);
+			void *aux = max->value;
+			max->value = root->value;
+			root->value = aux;
+			root->left = removeAVLNode(root->left, max->value, cmp, freeValue);
+		} else {
+			AVLNode *aux = root;
+			if (root->right == NULL && root->left == NULL)
+				root = NULL;
+			else if (root->right == NULL)
+				root = root->left;
+			else
+				root = root->right;
+			if (freeValue)
+				freeValueAVLNode(aux);
+			free(aux);
+		}
 	}
-	return balanceAVL(root);
+	return balanceAVLNode(root);
+}
+
+void *traverse(AVLNode *root, enum AVLTraversalType type, void (*f)(void *)) {
+	if (root != NULL) {
+		if (type == PRE_ORDER) {
+			f(root);
+			traverse(root->left, type, f);
+			traverse(root->right, type, f);
+		} else if (type == IN_ORDER) {
+			traverse(root->left, type, f);
+			f(root);
+			traverse(root->right, type, f);
+		} else if (type == POST_ORDER) {
+			traverse(root->left, type, f);
+			traverse(root->right, type, f);
+			f(root);
+		}
+	}
 }
