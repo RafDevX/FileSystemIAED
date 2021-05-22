@@ -24,6 +24,10 @@
 #define RETCODE_OK 0
 #define RETCODE_UNKNOWN_CMD 1
 
+/*** General ***/
+
+#define ROOT_NAME ""
+
 /************************
  ***** Custom Types *****
  ************************/
@@ -66,7 +70,8 @@ typedef struct {
 enum AVLTraversalType {
 	PRE_ORDER,
 	IN_ORDER,
-	POST_ORDER
+	POST_ORDER,
+	FREE
 };
 
 /*********************
@@ -81,6 +86,7 @@ DLL *newDLL();
 DLLNode *pushDLL(DLL *lst, void *value);
 void removeDLL(DLL *lst, int (*shouldRemoveNode)(void *), int onlyFirst,
 			   void (*freeValue)(void *));
+void traverseDLL(DLL *lst, void (*f)(void *), int freeNodes);
 
 AVLNode *newAVLNode(void *value);
 void setValueAVLNode(AVLNode *node, void *value);
@@ -98,6 +104,11 @@ AVLNode *removeAVLNode(AVLNode *root, void *rem, int (*cmp)(void *, void *),
 					   void (*freeValue)(void *));
 void traverseAVL(AVLNode *root, enum AVLTraversalType type, void (*f)(void *));
 void *searchAVL(AVLNode *root, void *key, int (*cmp)(void *, void *));
+
+Dir *newDir(char name[]);
+int cmpValuesDir(void *a, void *b);
+Dir *newChildDir(Dir *parent, char name[]);
+void setValueDir(Dir *dir, char value[]);
 
 /* Auxiliary */
 

@@ -60,3 +60,22 @@ void removeDLL(DLL *lst, int (*shouldRemoveNode)(void *), int onlyFirst,
 		}
 	}
 }
+
+void traverseDLL(DLL *lst, void (*f)(void *), int freeNodes) {
+	if (lst != NULL) {
+		DLLNode *next, *head = lst->head;
+		while (head) {
+			if (f)
+				f(head->value);
+			next = head->next;
+			if (freeNodes)
+				free(head);
+			head = next;
+		}
+	}
+}
+
+void freeDLL(DLL *lst) {
+	if (lst != NULL) {
+	}
+}

@@ -47,27 +47,14 @@ void print_n(void *a) {
 
 /* Master logic: start up, read a command key and send it to triage */
 int main() {
-	Dir *root;
+	Dir *root = newDir(ROOT_NAME);
 	char cmd[MAX_CMD_LENGTH];
-	/* TODO: startup */
-
-	AVLNode *h = newAVLNode(ns(20));
-	h = insertAVLNode(h, ns(30), num_cmp);
-	h = insertAVLNode(h, ns(37), num_cmp);
-	h = insertAVLNode(h, ns(32), num_cmp);
-	h = insertAVLNode(h, ns(27), num_cmp);
-	h = insertAVLNode(h, ns(24), num_cmp);
-	h = insertAVLNode(h, ns(35), num_cmp);
-	h = insertAVLNode(h, ns(29), num_cmp);
-	h = removeAVLNode(h, ns(30), num_cmp, 0);
-	traverseAVL(h, POST_ORDER, print_n);
-	print_n(searchAVL(h, 32, cmp2));
 
 	while (scanf("%s", cmd) && isValidChar(cmd[0]) && !strcmp(cmd, CMD_QUIT))
 		if (!triage(root, cmd))
 			return RETCODE_UNKNOWN_CMD;
 
-	/* call cleanup function */
+	deleteDir(root);
 
 	return RETCODE_OK;
 }

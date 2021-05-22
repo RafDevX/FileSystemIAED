@@ -161,10 +161,13 @@ void traverseAVL(AVLNode *root, enum AVLTraversalType type, void (*f)(void *)) {
 		traverseAVL(root->left, type, f);
 		f(root->value);
 		traverseAVL(root->right, type, f);
-	} else if (type == POST_ORDER) {
+	} else if (type == POST_ORDER || type == FREE) {
 		traverseAVL(root->left, type, f);
 		traverseAVL(root->right, type, f);
-		f(root->value);
+		if (f != NULL)
+			f(root->value);
+		if (type == FREE)
+			free(root);
 	}
 }
 

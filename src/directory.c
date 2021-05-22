@@ -34,3 +34,12 @@ void setValueDir(Dir *dir, char value[]) {
 	}
 	dir->value = strdup(value);
 }
+
+void deleteDir(Dir *dir) {
+	traverseDLL(dir->children, deleteDir, 1);
+	traverseAVL(dir->abcChildren, FREE, NULL);
+	free(dir->children);
+	free(dir->value);
+	free(dir->name);
+	free(dir);
+}
