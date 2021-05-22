@@ -13,3 +13,10 @@ void cmdHelp() {
 	for (i = 0; i < (int)(sizeof(lines) / sizeof(lines[0])); i++)
 		printf("%s\n", lines[i]);
 }
+
+/* set */
+
+void cmdPrint(Dir *root) {
+	printDir(root);
+	printDir(NULL);
+}

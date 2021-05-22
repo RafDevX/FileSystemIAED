@@ -50,3 +50,20 @@ void deleteDir(Dir *dir, Dir *parent) {
 void deleteDirWrapper(void *value) {
 	deleteDir((Dir *)value, NULL);
 }
+
+void printDir(Dir *dir) {
+	static char path[MAX_PATH_LEN];
+	if (dir == NULL) {
+		path[0] = '\0';
+		return;
+	}
+	strcat(path, PATH_SEPARATOR);
+	strcat(path, dir->name);
+	if (dir->value != NULL)
+		printf("%s %s\n", path, dir->value);
+	traverseDLL(dir->children, printDirWrapper, 0);
+}
+
+void printDirWrapper(void *value) {
+	printDir((Dir *)value);
+}

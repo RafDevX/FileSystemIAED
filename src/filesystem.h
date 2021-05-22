@@ -21,10 +21,16 @@
 
 #define CMD_QUIT "quit"
 #define CMD_HELP "help"
+#define CMD_SET "set"
+#define CMD_PRINT "print"
+#define CMD_FIND "find"
+#define CMD_LIST "list"
+#define CMD_SEARCH "search"
+#define CMD_DELETE "delete"
 
 /*** Help Text ***/
 
-#define MAX_HELP_LINE_LEN 50
+#define MAX_HELP_LINE_LEN 62
 #define HELP_LINES                                                     \
 	{ "help: Imprime os comandos disponíveis",                         \
 	  "quit: Termina o programa.",                                     \
@@ -35,14 +41,16 @@
 	  "search: Procura o caminho dado um valor.",                      \
 	  "delete: Apaga um caminho e todos os subcaminhos." }
 
+/*** Paths ***/
+
+#define ROOT_NAME ""
+#define MAX_PATH_LEN 10
+#define PATH_SEPARATOR "/"
+
 /*** Return Codes ***/
 
 #define RETCODE_OK 0
 #define RETCODE_UNKNOWN_CMD 1
-
-/*** General ***/
-
-#define ROOT_NAME ""
 
 /************************
  ***** Custom Types *****
@@ -126,6 +134,8 @@ Dir *newChildDir(Dir *parent, char name[]);
 void setValueDir(Dir *dir, char value[]);
 void deleteDir(Dir *dir, Dir *parent);
 void deleteDirWrapper(void *value);
+void printDir(Dir *dir);
+void printDirWrapper(void *value);
 
 /* Auxiliary */
 
@@ -135,6 +145,12 @@ char *strdup(char *s1);
 /* Commands */
 
 void cmdHelp();
+void cmdSet(Dir *root, char args[]);
+void cmdPrint(Dir *root);
+void cmdFind(Dir *root, char path[]);
+void cmdList(Dir *root, char path[]);
+void cmdSearch(Dir *root, char value[]);
+void cmdDelete(Dir *root, char path[]);
 
 /* General */
 

@@ -31,6 +31,18 @@ int main() {
 int triage(Dir *root, char cmd[], char args[]) {
 	if (strcmp(cmd, CMD_HELP) == 0)
 		cmdHelp();
+	else if (strcmp(cmd, CMD_SET) == 0)
+		return 999;
+	else if (strcmp(cmd, CMD_PRINT) == 0)
+		cmdPrint(root);
+	else if (strcmp(cmd, CMD_FIND) == 0)
+		return 999;
+	else if (strcmp(cmd, CMD_LIST) == 0)
+		return 999;
+	else if (strcmp(cmd, CMD_SEARCH) == 0)
+		return 999;
+	else if (strcmp(cmd, CMD_DELETE) == 0)
+		return 999;
 	else
 		return 0;
 	return 1;
