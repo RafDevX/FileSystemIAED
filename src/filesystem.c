@@ -40,7 +40,7 @@ int triage(Dir *root, char cmd[], char args[]) {
 	else if (strcmp(cmd, CMD_LIST) == 0)
 		cmdList(root, args);
 	else if (strcmp(cmd, CMD_SEARCH) == 0)
-		return 999;
+		cmdSearch(root, args);
 	else if (strcmp(cmd, CMD_DELETE) == 0)
 		return 999;
 	else

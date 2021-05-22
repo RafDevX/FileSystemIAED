@@ -85,6 +85,13 @@ void printChildDir(void *c) {
 	printf("%s\n", ((Dir *)c)->name);
 }
 
+char *searchDir(Dir *root, char value[]) {
+	/* TODO: hashtable */
+	if (root)
+		return strdup(value);
+	return NULL;
+}
+
 int cmpValuesDir(void *a, void *b) {
 	char *v1 = ((Dir *)a)->value, *v2 = ((Dir *)b)->value;
 	if (v1 == NULL)

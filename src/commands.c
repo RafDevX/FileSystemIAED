@@ -53,5 +53,13 @@ void cmdList(Dir *root, char path[]) {
 	free(pathList);
 }
 
-/*void cmdSearch(Dir *root, char value[]);
-void cmdDelete(Dir *root, char path[]);*/
+void cmdSearch(Dir *root, char value[]) {
+	char *path = searchDir(root, value);
+	if (path == NULL)
+		printf("%s\n", ERR_NOT_FOUND);
+	else
+		printf("%s\n", path);
+	free(path);
+}
+
+/*void cmdDelete(Dir *root, char path[]);*/
