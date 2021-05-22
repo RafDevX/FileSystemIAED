@@ -18,7 +18,22 @@
 
 #define MAX_INSTR_LENGTH 65535
 #define MAX_CMD_LENGTH 6
+
 #define CMD_QUIT "quit"
+#define CMD_HELP "help"
+
+/*** Help Text ***/
+
+#define MAX_HELP_LINE_LEN 50
+#define HELP_LINES                                                     \
+	{ "help: Imprime os comandos disponíveis",                         \
+	  "quit: Termina o programa.",                                     \
+	  "set: Adiciona ou modifica o valor a armazenar.",                \
+	  "print: Imprime todos os caminhos e valores.",                   \
+	  "find: Imprime o valor armazenado.",                             \
+	  "list: Lista todos os componentes imediatos de um sub-caminho.", \
+	  "search: Procura o caminho dado um valor.",                      \
+	  "delete: Apaga um caminho e todos os subcaminhos." }
 
 /*** Return Codes ***/
 
@@ -118,6 +133,8 @@ int isValidChar(char c);
 char *strdup(char *s1);
 
 /* Commands */
+
+void cmdHelp();
 
 /* General */
 
