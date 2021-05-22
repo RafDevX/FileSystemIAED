@@ -90,7 +90,7 @@ int calcBalanceAVLNode(AVLNode *node) {
 	return calcHeightAVLNode(node->left) - calcHeightAVLNode(node->right);
 }
 
-AVLNode *balanceAVLNode(AVLNode *root) {
+AVLNode *balanceAVL(AVLNode *root) {
 	int balance;
 	if (root == NULL)
 		return root;
@@ -112,7 +112,7 @@ AVLNode *insertAVLNode(AVLNode *root, void *value, int (*cmp)(void *, void *)) {
 		root->left = insertAVLNode(root->left, value, cmp);
 	else
 		root->right = insertAVLNode(root->right, value, cmp);
-	return balanceAVLNode(root);
+	return balanceAVL(root);
 }
 
 AVLNode *removeAVLNode(AVLNode *root, void *rem, int (*cmp)(void *, void *),
@@ -150,22 +150,22 @@ AVLNode *removeAVLNode(AVLNode *root, void *rem, int (*cmp)(void *, void *),
 			free(aux);
 		}
 	}
-	return balanceAVLNode(root);
+	return balanceAVL(root);
 }
 
-void *traverse(AVLNode *root, enum AVLTraversalType type, void (*f)(void *)) {
+void *traverseAVL(AVLNode *root, enum AVLTraversalType type, void (*f)(void *)) {
 	if (root != NULL) {
 		if (type == PRE_ORDER) {
 			f(root);
-			traverse(root->left, type, f);
-			traverse(root->right, type, f);
+			traverseAVL(root->left, type, f);
+			traverseAVL(root->right, type, f);
 		} else if (type == IN_ORDER) {
-			traverse(root->left, type, f);
+			traverseAVL(root->left, type, f);
 			f(root);
-			traverse(root->right, type, f);
+			traverseAVL(root->right, type, f);
 		} else if (type == POST_ORDER) {
-			traverse(root->left, type, f);
-			traverse(root->right, type, f);
+			traverseAVL(root->left, type, f);
+			traverseAVL(root->right, type, f);
 			f(root);
 		}
 	}
