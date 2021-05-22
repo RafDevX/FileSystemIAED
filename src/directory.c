@@ -37,6 +37,8 @@ void deleteDir(Dir *dir) {
 	traverseAVL(dir->abcChildren, FREE, NULL);
 	if (dir->parent) {
 		removeDLL(dir->parent->children, dir, 1, NULL);
+		dir->parent->abcChildren = removeAVLNode(dir->parent->abcChildren, dir,
+												 cmpValuesDir, 0);
 	}
 	free(dir->children);
 	free(dir->value);
