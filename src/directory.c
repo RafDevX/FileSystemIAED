@@ -46,7 +46,7 @@ void deleteDirWrapper(void *value) {
 	deleteDir((Dir *)value, NULL);
 }
 
-void printDir(Dir *dir) {
+void printDir(Dir *dir) { /* FIXME: */
 	static char path[MAX_PATH_LEN];
 	if (dir == NULL) {
 		path[0] = '\0';
@@ -66,7 +66,7 @@ void printDirWrapper(void *value) {
 Dir *findDir(Dir *root, DLL *path, int createIfMissing) {
 	char *cur;
 	Dir *dir;
-	if (emptyDLL(path))
+	if (root == NULL || emptyDLL(path))
 		return root;
 	cur = (char *)shiftDLL(path);
 	dir = (Dir *)firstMatchingDLL(root->children, cur, matchesNameDir);
@@ -87,5 +87,5 @@ int cmpValuesDir(void *a, void *b) {
 }
 
 int matchesNameDir(void *a, void *b) {
-	return strcmp((char *)a, ((Dir *)b)->name);
+	return strcmp((char *)a, ((Dir *)b)->name) == 0;
 }

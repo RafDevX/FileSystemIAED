@@ -28,3 +28,18 @@ void cmdPrint(Dir *root) {
 	printDir(root);
 	printDir(NULL);
 }
+
+void cmdFind(Dir *root, char path[]) {
+	DLL *pathList = strToDLL(path, PATH_SEPARATOR);
+	Dir *dir = findDir(root, pathList, 0);
+	if (dir == NULL)
+		printf("%s\n", ERR_NOT_FOUND);
+	else if (dir->value == NULL)
+		printf("%s\n", ERR_NO_DATA);
+	else
+		printf("%s\n", dir->value);
+}
+
+/*void cmdList(Dir *root, char path[]);
+void cmdSearch(Dir *root, char value[]);
+void cmdDelete(Dir *root, char path[]);*/

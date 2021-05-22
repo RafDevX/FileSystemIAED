@@ -36,7 +36,7 @@ int triage(Dir *root, char cmd[], char args[]) {
 	else if (strcmp(cmd, CMD_PRINT) == 0)
 		cmdPrint(root);
 	else if (strcmp(cmd, CMD_FIND) == 0)
-		return 999;
+		cmdFind(root, args);
 	else if (strcmp(cmd, CMD_LIST) == 0)
 		return 999;
 	else if (strcmp(cmd, CMD_SEARCH) == 0)

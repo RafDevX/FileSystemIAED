@@ -74,9 +74,11 @@ void *shiftDLL(DLL *lst) {
 
 void *firstMatchingDLL(DLL *lst, void *value, int (*matches)(void *, void *)) {
 	DLLNode *head = lst->head;
-	while (head)
+	while (head) {
 		if (matches(value, head->value))
 			return head->value;
+		head = head->next;
+	}
 	return NULL;
 }
 

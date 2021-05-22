@@ -28,6 +28,11 @@
 #define CMD_SEARCH "search"
 #define CMD_DELETE "delete"
 
+/*** Command Errors ***/
+
+#define ERR_NOT_FOUND "not found"
+#define ERR_NO_DATA "no data"
+
 /*** Help Text ***/
 
 #define MAX_HELP_LINE_LEN 62
