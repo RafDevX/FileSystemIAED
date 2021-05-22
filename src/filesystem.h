@@ -16,6 +16,7 @@
 
 /*** Commands ***/
 
+#define MAX_INSTR_LENGTH 65535
 #define MAX_CMD_LENGTH 6
 #define CMD_QUIT "quit"
 
@@ -84,8 +85,7 @@ DLLNode *newDLLNode();
 void setValueDLLNode(DLLNode *node, void *val);
 DLL *newDLL();
 DLLNode *pushDLL(DLL *lst, void *value);
-void removeDLL(DLL *lst, int (*shouldRemoveNode)(void *), int onlyFirst,
-			   void (*freeValue)(void *));
+void removeDLL(DLL *lst, void *val, int onlyFirst, void (*freeValue)(void *));
 void traverseDLL(DLL *lst, void (*f)(void *), int freeNodes);
 
 AVLNode *newAVLNode(void *value);
@@ -109,14 +109,16 @@ Dir *newDir(char name[]);
 int cmpValuesDir(void *a, void *b);
 Dir *newChildDir(Dir *parent, char name[]);
 void setValueDir(Dir *dir, char value[]);
+void deleteDir(Dir *dir, Dir *parent);
+void deleteDirWrapper(void *value);
 
 /* Auxiliary */
 
 int isValidChar(char c);
-int isTruthy(void *v);
+char *strdup(char *s1);
 
 /* Commands */
 
 /* General */
 
-int triage(Dir *root, char cmd[]);
+int triage(Dir *root, char cmd[], char args[]);

@@ -48,19 +48,24 @@ void print_n(void *a) {
 /* Master logic: start up, read a command key and send it to triage */
 int main() {
 	Dir *root = newDir(ROOT_NAME);
-	char cmd[MAX_CMD_LENGTH];
+	char instr[MAX_INSTR_LENGTH], cmd[MAX_CMD_LENGTH];
 
-	while (scanf("%s", cmd) && isValidChar(cmd[0]) && !strcmp(cmd, CMD_QUIT))
-		if (!triage(root, cmd))
+	while (fgets(instr, MAX_INSTR_LENGTH, stdin)) {
+		instr[strlen(instr) - 1] = '\0'; /* remove newline at the end */
+		sscanf(instr, "%s", cmd);
+
+		if (!triage(root, cmd, instr + strlen(cmd) + 1))
 			return RETCODE_UNKNOWN_CMD;
+	}
 
-	deleteDir(root);
+	deleteDir(root, NULL);
 
 	return RETCODE_OK;
 }
 
 /* Call the appropriate function for a command. Return whether it succeeded. */
-int triage(Dir *root, char cmd[]) {
+int triage(Dir *root, char cmd[], char args[]) {
 	/* */
-	return !!root && !!cmd;
+	printf("Received cmd = |%s|, args = |%s|\n", cmd, args);
+	return !!root;
 }

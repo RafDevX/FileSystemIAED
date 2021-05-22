@@ -39,11 +39,10 @@ DLLNode *pushDLL(DLL *lst, void *value) {
 	return node;
 }
 
-void removeDLL(DLL *lst, int (*shouldRemoveNode)(void *), int onlyFirst,
-			   void (*freeValue)(void *)) {
+void removeDLL(DLL *lst, void *val, int onlyFirst, void (*freeValue)(void *)) {
 	DLLNode *aux, *node = lst->head;
 	while (node) {
-		if (shouldRemoveNode(node->value)) {
+		if (node->value == val) {
 			if (node->prev)
 				(node->prev)->next = node->next;
 			if (node->next)
