@@ -86,12 +86,12 @@ void *firstMatchingDLL(DLL *lst, void *value, int (*matches)(void *, void *)) {
 	return NULL;
 }
 
-void traverseDLL(DLL *lst, void (*f)(void *), int freeNodes) {
-	if (lst != NULL) {
-		DLLNode *next, *head = lst->head;
+void traverseDLL(DLL *ls, void (*f)(void *, void *), int freeNodes, void *arg) {
+	if (ls != NULL) {
+		DLLNode *next, *head = ls->head;
 		while (head) {
 			if (f)
-				f(head->value);
+				f(head->value, arg);
 			next = head->next;
 			if (freeNodes)
 				free(head);

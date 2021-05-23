@@ -33,7 +33,7 @@ Dir *newChildDir(Dir *parent, char name[]) {
 }
 
 void deleteDir(Dir *dir, int topToDelete) {
-	traverseDLL(dir->children, deleteDirWrapper, 1);
+	traverseDLL(dir->children, deleteDirWrapper, 1, NULL);
 	traverseAVL(dir->abcChildren, FREE, NULL);
 	if (dir->parent && topToDelete) {
 		removeDLL(dir->parent->children, dir, 1, NULL);
@@ -46,25 +46,24 @@ void deleteDir(Dir *dir, int topToDelete) {
 	free(dir);
 }
 
-void deleteDirWrapper(void *value) {
-	deleteDir((Dir *)value, 0);
+void deleteDirWrapper(void *value, void *arg) {
+	if (arg == NULL)
+		deleteDir((Dir *)value, 0);
 }
 
-void printDir(Dir *dir) { /* FIXME: */
-	static char path[MAX_PATH_LEN];
-	if (dir == NULL) {
-		path[0] = '\0';
-		return;
-	}
-	strcat(path, PATH_SEPARATOR);
-	strcat(path, dir->name);
-	if (dir->value != NULL)
-		printf("%s %s\n", path, dir->value);
-	traverseDLL(dir->children, printDirWrapper, 0);
+void printDir(Dir *dir, char *buffer) {
+	int origSz = strlen(buffer);
+	if (strlen(dir->name) > 0)
+		strcat(buffer, PATH_SEPARATOR);
+	strcat(buffer, dir->name);
+	if (dir->value)
+		printf("%s %s\n", buffer, dir->value);
+	traverseDLL(dir->children, printDirWrapper, 0, buffer);
+	buffer[origSz] = '\0';
 }
 
-void printDirWrapper(void *value) {
-	printDir((Dir *)value);
+void printDirWrapper(void *value, void *arg) {
+	printDir((Dir *)value, (char *)arg);
 }
 
 Dir *findDir(Dir *root, DLL *path, int createIfMissing) {
