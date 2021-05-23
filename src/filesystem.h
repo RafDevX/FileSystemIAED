@@ -16,8 +16,8 @@
 
 /*** General Settings ***/
 
-#define MAX_INSTR_LEN 65535
-#define MAX_CMD_LEN 6
+#define MAX_INSTR_LEN 65536 /* +1 for \0 */
+#define MAX_CMD_LEN 7		/* +1 for \0 */
 #define VALUES_TABLE_DIM 49157
 
 /*** Commands ***/
@@ -52,7 +52,7 @@
 /*** Paths ***/
 
 #define ROOT_NAME ""
-#define MAX_PATH_LEN 65529 /* MAX_INSTR_LEN - 6 */
+#define MAX_PATH_LEN 65530 /* MAX_INSTR_LEN - 6 */
 #define PATH_SEPARATOR "/"
 
 /*** Return Codes ***/
