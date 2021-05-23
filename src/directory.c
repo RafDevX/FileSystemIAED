@@ -91,10 +91,15 @@ void printChildDir(void *c) {
 char *calcPathDir(Dir *dir) {
 	char buffer[MAX_PATH_LEN] = "";
 	char *path = malloc(sizeof(char) * MAX_PATH_LEN);
+	int first = 1;
 	path[0] = '\0';
 	while (dir != NULL) {
 		strcpy(buffer, path);
 		strcpy(path, dir->name);
+		if (first)
+			first = 0;
+		else
+			strcat(path, PATH_SEPARATOR);
 		strcat(path, buffer);
 		dir = dir->parent;
 	}
