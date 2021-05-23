@@ -131,6 +131,7 @@ void *shiftDLL(DLL *lst);
 void *firstMatchingDLL(DLL *lst, void *value, int (*matches)(void *, void *));
 void traverseDLL(DLL *lst, void (*f)(void *, void *), int freeNodes, void *arg);
 int emptyDLL(DLL *lst);
+void *onlyElementDLL(DLL *lst);
 DLL *strToDLL(char str[], char delim[]);
 
 AVLNode *newAVLNode(void *value);
@@ -153,7 +154,8 @@ void *searchAVL(AVLNode *root, void *key, int (*cmp)(void *, void *));
 Dir *newDir(char name[]);
 Dir *newChildDir(Dir *parent, char name[]);
 void setValueDir(Dir *dir, char value[]);
-void deleteDir(Dir *dir, int top, void (*callback)(Dir *, void *), void *arg);
+void deleteDir(Dir *dir, int top, int skipTop,
+			   void (*callback)(Dir *, void *), void *arg);
 void deleteDirWrapper(void *value, void *arg);
 void printDir(Dir *dir, char buffer[]);
 void printDirWrapper(void *value, void *arg);

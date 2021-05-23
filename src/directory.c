@@ -32,27 +32,34 @@ Dir *newChildDir(Dir *parent, char name[]) {
 	return new;
 }
 
-void deleteDir(Dir *dir, int top, void (*newCback)(Dir *, void *), void *arg) {
+void deleteDir(Dir *dir, int top, int skipTop,
+			   void (*newCback)(Dir *, void *), void *arg) {
 	static void (*callback)(Dir *, void *) = NULL;
 	if (newCback != NULL)
 		callback = newCback;
 	traverseDLL(dir->children, deleteDirWrapper, 1, arg);
 	traverseAVL(dir->abcChildren, FREE, NULL);
-	if (dir->parent && top) {
-		removeDLL(dir->parent->children, dir, 1, NULL);
-		dir->parent->abcChildren = removeAVLNode(dir->parent->abcChildren, dir,
-												 cmpNamesDir, NULL);
+	if (!(top && skipTop)) {
+		if (dir->parent && top) {
+			removeDLL(dir->parent->children, dir, 1, NULL);
+			dir->parent->abcChildren = removeAVLNode(dir->parent->abcChildren,
+													 dir, cmpNamesDir, NULL);
+		}
+		if (callback)
+			callback(dir, arg);
+		free(dir->children);
+		free(dir->value);
+		free(dir->name);
+		free(dir);
+	} else {
+		free(dir->children);
+		dir->children = newDLL();
+		dir->abcChildren = NULL;
 	}
-	if (callback)
-		callback(dir, arg);
-	free(dir->children);
-	free(dir->value);
-	free(dir->name);
-	free(dir);
 }
 
 void deleteDirWrapper(void *value, void *arg) {
-	deleteDir((Dir *)value, 0, NULL, arg);
+	deleteDir((Dir *)value, 0, 0, NULL, arg);
 }
 
 void deleteDirNOP(Dir *a, void *b) {

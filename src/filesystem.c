@@ -23,7 +23,7 @@ int main() {
 			return RETCODE_UNKNOWN_CMD;
 	}
 
-	deleteDir(root, 1, deleteDirNOP, NULL);
+	deleteDir(root, 1, 0, deleteDirNOP, NULL);
 	freeHashT(valuesTable);
 
 	return RETCODE_OK;
