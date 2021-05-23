@@ -14,7 +14,9 @@ int main() {
 	char instr[MAX_INSTR_LEN], cmd[MAX_CMD_LEN];
 
 	while (fgets(instr, MAX_INSTR_LEN, stdin)) {
-		instr[strlen(instr) - 1] = '\0'; /* remove newline at the end */
+		int lastPos = strlen(instr) - 1;
+		if (instr[lastPos] == '\n')
+			instr[lastPos] = '\0';
 		sscanf(instr, "%s", cmd);
 		if (strcmp(cmd, CMD_QUIT) == 0)
 			break;
