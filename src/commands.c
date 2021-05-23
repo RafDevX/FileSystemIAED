@@ -61,7 +61,7 @@ void cmdSearch(HashT *table, char value[]) {
 	DLL *possible = searchHashT(table, value);
 	Dir *result = NULL;
 	void *auxArgs[2];
-	auxArgs[0] = result;
+	auxArgs[0] = &result;
 	auxArgs[1] = value;
 	traverseDLL(possible, searchAux, 0, auxArgs);
 	if (result != NULL) {

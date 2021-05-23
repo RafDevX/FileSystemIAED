@@ -181,7 +181,7 @@ void searchAux(void *val, void *args);
 /* Commands */
 
 void cmdHelp();
-void cmdSet(Dir *root, char args[]);
+void cmdSet(Dir *root, HashT *table, char args[]);
 void cmdPrint(Dir *root);
 void cmdFind(Dir *root, char path[]);
 void cmdList(Dir *root, char path[]);

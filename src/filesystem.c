@@ -34,7 +34,7 @@ int triage(Dir *root, HashT *valuesTable, char cmd[], char args[]) {
 	if (strcmp(cmd, CMD_HELP) == 0)
 		cmdHelp();
 	else if (strcmp(cmd, CMD_SET) == 0)
-		cmdSet(root, args);
+		cmdSet(root, valuesTable, args);
 	else if (strcmp(cmd, CMD_PRINT) == 0)
 		cmdPrint(root);
 	else if (strcmp(cmd, CMD_FIND) == 0)

@@ -24,8 +24,8 @@ long int hashS(void *key, long int M) {
 
 void searchAux(void *val, void *args) {
 	Dir *dir = (Dir *)val;
-	Dir *result = ((void **)args)[0];
+	Dir **result = ((void **)args)[0];
 	char *value = ((void **)args)[1];
-	if (result == NULL && strcmp(dir->value, value) == 0)
-		result = dir;
+	if (*result == NULL && strcmp(dir->value, value) == 0)
+		*result = dir;
 }
