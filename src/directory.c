@@ -88,11 +88,17 @@ void printChildDir(void *c) {
 	printf("%s\n", ((Dir *)c)->name);
 }
 
-char *searchDir(Dir *root, char value[]) {
-	/* TODO: hashtable */
-	if (root)
-		return strdup(value);
-	return NULL;
+char *calcPathDir(Dir *dir) {
+	char buffer[MAX_PATH_LEN] = "";
+	char *path = malloc(sizeof(char) * MAX_PATH_LEN);
+	path[0] = '\0';
+	while (dir != NULL) {
+		strcpy(buffer, path);
+		strcpy(path, dir->name);
+		strcat(path, buffer);
+		dir = dir->parent;
+	}
+	return path;
 }
 
 int cmpNamesDir(void *a, void *b) {

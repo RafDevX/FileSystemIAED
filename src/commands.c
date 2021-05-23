@@ -54,13 +54,20 @@ void cmdList(Dir *root, char path[]) {
 	free(pathList);
 }
 
-void cmdSearch(Dir *root, char value[]) {
-	char *path = searchDir(root, value);
-	if (path == NULL)
-		printf("%s\n", ERR_NOT_FOUND);
-	else
+void cmdSearch(HashT *table, char value[]) {
+	DLL *possible = searchHashT(table, value);
+	Dir *result = NULL;
+	void *auxArgs[2];
+	auxArgs[0] = result;
+	auxArgs[1] = value;
+	traverseDLL(possible, searchAux, 0, auxArgs);
+	if (result != NULL) {
+		char *path = calcPathDir(result);
 		printf("%s\n", path);
-	free(path);
+		free(path);
+	} else {
+		printf("%s\n", ERR_NOT_FOUND);
+	}
 }
 
 void cmdDelete(Dir *root, char path[]) {

@@ -21,3 +21,11 @@ long int hashS(void *key, long int M) {
 		h = (a * h + *v) % M;
 	return h;
 }
+
+void searchAux(void *val, void *args) {
+	Dir *dir = (Dir *)val;
+	Dir *result = ((void **)args)[0];
+	char *value = ((void **)args)[1];
+	if (result == NULL && strcmp(dir->value, value) == 0)
+		result = dir;
+}

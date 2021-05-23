@@ -16,8 +16,8 @@
 
 /*** General Settings ***/
 
-#define MAX_INSTR_LENGTH 65535
-#define MAX_CMD_LENGTH 6
+#define MAX_INSTR_LEN 65535
+#define MAX_CMD_LEN 6
 #define VALUES_TABLE_DIM 49157
 
 /*** Commands ***/
@@ -52,7 +52,7 @@
 /*** Paths ***/
 
 #define ROOT_NAME ""
-#define MAX_PATH_LEN 65529 /* MAX_INSTR_LENGTH - 6 */
+#define MAX_PATH_LEN 65529 /* MAX_INSTR_LEN - 6 */
 #define PATH_SEPARATOR "/"
 
 /*** Return Codes ***/
@@ -160,7 +160,7 @@ void printDirWrapper(void *value, void *arg);
 Dir *findDir(Dir *root, DLL *path, int createIfMissing);
 void listAbcChildrenDir(Dir *dir);
 void printChildDir(void *c);
-char *searchDir(Dir *root, char value[]);
+char *calcPathDir(Dir *dir);
 int cmpNamesDir(void *a, void *b);
 int matchesNameDir(void *a, void *b);
 void *getValueDir(void *dir);
@@ -176,6 +176,7 @@ void freeHashT(HashT *table);
 
 char *strdup(char *s1);
 long int hashS(void *key, long int M);
+void searchAux(void *val, void *args);
 
 /* Commands */
 
@@ -184,9 +185,9 @@ void cmdSet(Dir *root, char args[]);
 void cmdPrint(Dir *root);
 void cmdFind(Dir *root, char path[]);
 void cmdList(Dir *root, char path[]);
-void cmdSearch(Dir *root, char value[]);
+void cmdSearch(HashT *valuesTable, char value[]);
 void cmdDelete(Dir *root, char path[]);
 
 /* General */
 
-int triage(Dir *root, char cmd[], char args[]);
+int triage(Dir *root, HashT *valuesTable, char cmd[], char args[]);

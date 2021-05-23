@@ -11,15 +11,15 @@
 int main() {
 	Dir *root = newDir(ROOT_NAME);
 	HashT *valuesTable = newHashT(VALUES_TABLE_DIM, getValueDir, hashS);
-	char instr[MAX_INSTR_LENGTH], cmd[MAX_CMD_LENGTH];
+	char instr[MAX_INSTR_LEN], cmd[MAX_CMD_LEN];
 
-	while (fgets(instr, MAX_INSTR_LENGTH, stdin)) {
+	while (fgets(instr, MAX_INSTR_LEN, stdin)) {
 		instr[strlen(instr) - 1] = '\0'; /* remove newline at the end */
 		sscanf(instr, "%s", cmd);
 		if (strcmp(cmd, CMD_QUIT) == 0)
 			break;
 
-		if (!triage(root, cmd, instr + strlen(cmd) + 1))
+		if (!triage(root, valuesTable, cmd, instr + strlen(cmd) + 1))
 			return RETCODE_UNKNOWN_CMD;
 	}
 
@@ -30,7 +30,7 @@ int main() {
 }
 
 /* Call the appropriate function for a command. Return whether it succeeded. */
-int triage(Dir *root, char cmd[], char args[]) {
+int triage(Dir *root, HashT *valuesTable, char cmd[], char args[]) {
 	if (strcmp(cmd, CMD_HELP) == 0)
 		cmdHelp();
 	else if (strcmp(cmd, CMD_SET) == 0)
@@ -42,7 +42,7 @@ int triage(Dir *root, char cmd[], char args[]) {
 	else if (strcmp(cmd, CMD_LIST) == 0)
 		cmdList(root, args);
 	else if (strcmp(cmd, CMD_SEARCH) == 0)
-		cmdSearch(root, args);
+		cmdSearch(valuesTable, args);
 	else if (strcmp(cmd, CMD_DELETE) == 0)
 		cmdDelete(root, args);
 	else
