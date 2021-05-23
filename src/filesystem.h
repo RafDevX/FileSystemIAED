@@ -14,10 +14,13 @@
  ***** Project-Wide Constants *****
  **********************************/
 
-/*** Commands ***/
+/*** General Settings ***/
 
 #define MAX_INSTR_LENGTH 65535
 #define MAX_CMD_LENGTH 6
+#define VALUES_TABLE_DIM 49157
+
+/*** Commands ***/
 
 #define CMD_QUIT "quit"
 #define CMD_HELP "help"
@@ -97,7 +100,6 @@ typedef struct DN {
 
 typedef struct {
 	long int dim;
-	long int occupancy;
 	void *(*getKey)(void *);
 	long int (*hash)(void *, long int);
 	DLL **entries;
@@ -161,20 +163,19 @@ void printChildDir(void *c);
 char *searchDir(Dir *root, char value[]);
 int cmpNamesDir(void *a, void *b);
 int matchesNameDir(void *a, void *b);
+void *getValueDir(void *dir);
 
 HashT *newHashT(long int dim, void *getKey(void *),
 				long int (*hash)(void *, long int));
 DLL *searchHashT(HashT *table, void *key);
-HashT *insertHashT(HashT *table, void *value);
-void insertHashTWrapper(void *value, void *arg);
-HashT *resizeHashT(HashT *table, long int newDim);
+void insertHashT(HashT *table, void *value);
 void removeHashT(HashT *table, void *value);
 void freeHashT(HashT *table);
 
 /* Auxiliary */
 
-int isValidChar(char c);
 char *strdup(char *s1);
+long int hashS(void *key, long int M);
 
 /* Commands */
 

@@ -102,3 +102,7 @@ int cmpNamesDir(void *a, void *b) {
 int matchesNameDir(void *a, void *b) {
 	return strcmp((char *)a, ((Dir *)b)->name) == 0;
 }
+
+void *getValueDir(void *dir) {
+	return ((Dir *)dir)->value;
+}

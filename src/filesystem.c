@@ -10,6 +10,7 @@
 /* Master logic: start up, read a command key and send it to triage */
 int main() {
 	Dir *root = newDir(ROOT_NAME);
+	HashT *valuesTable = newHashT(VALUES_TABLE_DIM, getValueDir, hashS);
 	char instr[MAX_INSTR_LENGTH], cmd[MAX_CMD_LENGTH];
 
 	while (fgets(instr, MAX_INSTR_LENGTH, stdin)) {
@@ -23,6 +24,7 @@ int main() {
 	}
 
 	deleteDir(root, 1);
+	freeHashT(valuesTable);
 
 	return RETCODE_OK;
 }
