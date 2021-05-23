@@ -32,14 +32,19 @@ Dir *newChildDir(Dir *parent, char name[]) {
 	return new;
 }
 
-void deleteDir(Dir *dir, int topToDelete) {
-	traverseDLL(dir->children, deleteDirWrapper, 1, NULL);
+void deleteDir(Dir *dir, int top, void (*newCback)(Dir *, void *), void *arg) {
+	static void (*callback)(Dir *, void *) = NULL;
+	if (newCback != NULL)
+		callback = newCback;
+	traverseDLL(dir->children, deleteDirWrapper, 1, arg);
 	traverseAVL(dir->abcChildren, FREE, NULL);
-	if (dir->parent && topToDelete) {
+	if (dir->parent && top) {
 		removeDLL(dir->parent->children, dir, 1, NULL);
 		dir->parent->abcChildren = removeAVLNode(dir->parent->abcChildren, dir,
 												 cmpNamesDir, NULL);
 	}
+	if (callback)
+		callback(dir, arg);
 	free(dir->children);
 	free(dir->value);
 	free(dir->name);
@@ -48,7 +53,14 @@ void deleteDir(Dir *dir, int topToDelete) {
 
 void deleteDirWrapper(void *value, void *arg) {
 	if (arg == NULL)
-		deleteDir((Dir *)value, 0);
+		deleteDir((Dir *)value, 0, NULL, arg);
+}
+
+void deleteDirNOP(Dir *a, void *b) {
+	if (a && b) { /* suppress unused variables warning */
+
+		/* No Operation - do nothing */
+	};
 }
 
 void printDir(Dir *dir, char buffer[]) {

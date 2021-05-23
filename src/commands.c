@@ -14,7 +14,7 @@ void cmdHelp() {
 		printf("%s\n", lines[i]);
 }
 
-void cmdSet(Dir *root, HashT *table, char args[]) {
+void cmdSet(Dir *root, HashT *valuesTable, char args[]) {
 	char path[MAX_PATH_LEN], *value;
 	Dir *dir;
 	DLL *pathList;
@@ -23,9 +23,9 @@ void cmdSet(Dir *root, HashT *table, char args[]) {
 	pathList = strToDLL(path, PATH_SEPARATOR);
 	dir = findDir(root, pathList, 1);
 	if (getValueDir(dir) != NULL)
-		removeHashT(table, dir);
+		removeHashT(valuesTable, dir);
 	setValueDir(dir, value);
-	insertHashT(table, dir);
+	insertHashT(valuesTable, dir);
 	free(pathList);
 }
 
@@ -57,8 +57,8 @@ void cmdList(Dir *root, char path[]) {
 	free(pathList);
 }
 
-void cmdSearch(HashT *table, char value[]) {
-	DLL *possible = searchHashT(table, value);
+void cmdSearch(HashT *valuesTable, char value[]) {
+	DLL *possible = searchHashT(valuesTable, value);
 	Dir *result = NULL;
 	void *auxArgs[2];
 	auxArgs[0] = &result;
@@ -73,12 +73,12 @@ void cmdSearch(HashT *table, char value[]) {
 	}
 }
 
-void cmdDelete(Dir *root, char path[]) {
+void cmdDelete(Dir *root, HashT *valuesTable, char path[]) {
 	DLL *pathList = strToDLL(path, PATH_SEPARATOR);
 	Dir *dir = findDir(root, pathList, 0);
 	if (dir == NULL)
 		printf("%s\n", ERR_NOT_FOUND);
 	else
-		deleteDir(dir, 1);
+		deleteDir(dir, 1, deleteAux, valuesTable);
 	free(pathList);
 }

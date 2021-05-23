@@ -29,3 +29,8 @@ void searchAux(void *val, void *args) {
 	if (*result == NULL && strcmp(dir->value, value) == 0)
 		*result = dir;
 }
+
+void deleteAux(Dir *dir, void *valuesTable) {
+	if (dir->value != NULL)
+		removeHashT((HashT *)valuesTable, dir);
+}

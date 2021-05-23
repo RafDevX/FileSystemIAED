@@ -23,7 +23,7 @@ int main() {
 			return RETCODE_UNKNOWN_CMD;
 	}
 
-	deleteDir(root, 1);
+	deleteDir(root, 1, deleteDirNOP, NULL);
 	freeHashT(valuesTable);
 
 	return RETCODE_OK;
@@ -44,7 +44,7 @@ int triage(Dir *root, HashT *valuesTable, char cmd[], char args[]) {
 	else if (strcmp(cmd, CMD_SEARCH) == 0)
 		cmdSearch(valuesTable, args);
 	else if (strcmp(cmd, CMD_DELETE) == 0)
-		cmdDelete(root, args);
+		cmdDelete(root, valuesTable, args);
 	else
 		return 0;
 	return 1;

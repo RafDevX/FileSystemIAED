@@ -153,10 +153,11 @@ void *searchAVL(AVLNode *root, void *key, int (*cmp)(void *, void *));
 Dir *newDir(char name[]);
 Dir *newChildDir(Dir *parent, char name[]);
 void setValueDir(Dir *dir, char value[]);
-void deleteDir(Dir *dir, int topToDelete);
+void deleteDir(Dir *dir, int top, void (*callback)(Dir *, void *), void *arg);
 void deleteDirWrapper(void *value, void *arg);
 void printDir(Dir *dir, char buffer[]);
 void printDirWrapper(void *value, void *arg);
+void deleteDirNOP(Dir *a, void *b);
 Dir *findDir(Dir *root, DLL *path, int createIfMissing);
 void listAbcChildrenDir(Dir *dir);
 void printChildDir(void *c);
@@ -177,16 +178,17 @@ void freeHashT(HashT *table);
 char *strdup(char *s1);
 long int hashS(void *key, long int M);
 void searchAux(void *val, void *args);
+void deleteAux(Dir *dir, void *valuesTable);
 
 /* Commands */
 
 void cmdHelp();
-void cmdSet(Dir *root, HashT *table, char args[]);
+void cmdSet(Dir *root, HashT *valuesTable, char args[]);
 void cmdPrint(Dir *root);
 void cmdFind(Dir *root, char path[]);
 void cmdList(Dir *root, char path[]);
 void cmdSearch(HashT *valuesTable, char value[]);
-void cmdDelete(Dir *root, char path[]);
+void cmdDelete(Dir *root, HashT *valuesTable, char path[]);
 
 /* General */
 
