@@ -38,7 +38,13 @@ void insertHashT(HashT *table, void *value) {
 
 void removeHashT(HashT *table, void *value) {
 	void *key = table->getKey(value);
-	removeDLL(searchHashT(table, key), value, 1, NULL);
+	DLL *lst = searchHashT(table, key);
+	removeDLL(lst, value, 1, NULL);
+	if (emptyDLL(lst)) {
+		traverseDLL(lst, NULL, 1, NULL);
+		free(lst);
+		table->entries[table->hash(key, table->dim)] = NULL;
+	}
 }
 
 void freeHashT(HashT *table) {
