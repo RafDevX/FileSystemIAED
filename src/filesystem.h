@@ -93,6 +93,16 @@ typedef struct DN {
 	struct DN *parent;
 } Dir;
 
+/* Hash Table */
+
+typedef struct {
+	long int dim;
+	long int occupancy;
+	void *(*getKey)(void *);
+	long int (*hash)(void *, long int);
+	DLL **entries;
+} HashT;
+
 /*****************
  ***** Enums *****
  *****************/
@@ -151,6 +161,15 @@ void printChildDir(void *c);
 char *searchDir(Dir *root, char value[]);
 int cmpNamesDir(void *a, void *b);
 int matchesNameDir(void *a, void *b);
+
+HashT *newHashT(long int dim, void *getKey(void *),
+				long int (*hash)(void *, long int));
+DLL *searchHashT(HashT *table, void *key);
+HashT *insertHashT(HashT *table, void *value);
+void insertHashTWrapper(void *value, void *arg);
+HashT *resizeHashT(HashT *table, long int newDim);
+void removeHashT(HashT *table, void *value);
+void freeHashT(HashT *table);
 
 /* Auxiliary */
 
