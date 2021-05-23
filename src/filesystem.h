@@ -37,7 +37,7 @@
 
 #define MAX_HELP_LINE_LEN 62
 #define HELP_LINES                                                     \
-	{ "help: Imprime os comandos disponíveis",                         \
+	{ "help: Imprime os comandos disponíveis.",                        \
 	  "quit: Termina o programa.",                                     \
 	  "set: Adiciona ou modifica o valor a armazenar.",                \
 	  "print: Imprime todos os caminhos e valores.",                   \
