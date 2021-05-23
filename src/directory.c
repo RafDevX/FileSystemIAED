@@ -52,8 +52,7 @@ void deleteDir(Dir *dir, int top, void (*newCback)(Dir *, void *), void *arg) {
 }
 
 void deleteDirWrapper(void *value, void *arg) {
-	if (arg == NULL)
-		deleteDir((Dir *)value, 0, NULL, arg);
+	deleteDir((Dir *)value, 0, NULL, arg);
 }
 
 void deleteDirNOP(Dir *a, void *b) {
