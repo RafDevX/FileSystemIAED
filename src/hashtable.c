@@ -13,7 +13,7 @@ HashT *newHashT(long int dim, void *getKey(void *),
 	HashT *table = (HashT *)malloc(sizeof(HashT));
 	DLL **entries = (DLL **)malloc(sizeof(DLL *) * dim);
 	for (i = 0; i < dim; i++)
-		entries[i] = NULL;
+		entries[i] = newDLL();
 	table->dim = dim;
 	table->getKey = getKey;
 	table->hash = hash;
@@ -24,10 +24,6 @@ HashT *newHashT(long int dim, void *getKey(void *),
 DLL *searchHashT(HashT *table, void *key) {
 	long int hash = table->hash(key, table->dim);
 	DLL *lst = table->entries[hash];
-	if (lst == NULL) {
-		lst = newDLL();
-		table->entries[hash] = lst;
-	}
 	return lst;
 }
 
@@ -40,11 +36,6 @@ void removeHashT(HashT *table, void *value) {
 	void *key = table->getKey(value);
 	DLL *lst = searchHashT(table, key);
 	removeDLL(lst, value, 1, NULL);
-	if (emptyDLL(lst)) {
-		traverseDLL(lst, NULL, 1, NULL);
-		free(lst);
-		table->entries[table->hash(key, table->dim)] = NULL;
-	}
 }
 
 void freeHashT(HashT *table) {
