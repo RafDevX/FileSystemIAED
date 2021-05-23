@@ -19,6 +19,9 @@
 #define MAX_INSTR_LEN 65536 /* +1 for \0 */
 #define MAX_CMD_LEN 7		/* +1 for \0 */
 #define VALUES_TABLE_DIM 49157
+#define ROOT_NAME ""
+#define MAX_PATH_LEN 65530 /* MAX_INSTR_LEN - 6 */
+#define PATH_SEPARATOR "/"
 
 /*** Commands ***/
 
@@ -48,12 +51,6 @@
 	  "list: Lista todos os componentes imediatos de um sub-caminho.", \
 	  "search: Procura o caminho dado um valor.",                      \
 	  "delete: Apaga um caminho e todos os subcaminhos." }
-
-/*** Paths ***/
-
-#define ROOT_NAME ""
-#define MAX_PATH_LEN 65530 /* MAX_INSTR_LEN - 6 */
-#define PATH_SEPARATOR "/"
 
 /*** Return Codes ***/
 
