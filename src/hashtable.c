@@ -43,5 +43,6 @@ void freeHashT(HashT *table) {
 		traverseDLL(table->entries[i], NULL, 1, NULL);
 		free(table->entries[i]);
 	}
+	free(table->entries);
 	free(table);
 }
