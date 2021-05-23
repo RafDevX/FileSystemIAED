@@ -104,13 +104,6 @@ int emptyDLL(DLL *lst) {
 	return lst->head == NULL;
 }
 
-void *onlyElementDLL(DLL *lst) {
-	if (lst->head == lst->tail)
-		return lst->head;
-	else
-		return NULL;
-}
-
 DLL *strToDLL(char str[], char delim[]) {
 	char *token;
 	DLL *lst = newDLL();

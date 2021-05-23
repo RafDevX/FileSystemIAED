@@ -128,7 +128,6 @@ void *shiftDLL(DLL *lst);
 void *firstMatchingDLL(DLL *lst, void *value, int (*matches)(void *, void *));
 void traverseDLL(DLL *lst, void (*f)(void *, void *), int freeNodes, void *arg);
 int emptyDLL(DLL *lst);
-void *onlyElementDLL(DLL *lst);
 DLL *strToDLL(char str[], char delim[]);
 
 AVLNode *newAVLNode(void *value);
