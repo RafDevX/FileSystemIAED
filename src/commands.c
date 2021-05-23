@@ -14,7 +14,7 @@ void cmdHelp() {
 		printf("%s\n", lines[i]);
 }
 
-void cmdSet(Dir *root, char args[]) {
+void cmdSet(Dir *root, HashT *table, char args[]) {
 	char path[MAX_PATH_LEN], *value;
 	Dir *dir;
 	DLL *pathList;
@@ -22,7 +22,10 @@ void cmdSet(Dir *root, char args[]) {
 	value = args + strlen(path) + 1;
 	pathList = strToDLL(path, PATH_SEPARATOR);
 	dir = findDir(root, pathList, 1);
+	if (getValueDir(dir) != NULL)
+		removeHashT(table, dir);
 	setValueDir(dir, value);
+	insertHashT(table, dir);
 	free(pathList);
 }
 
