@@ -27,10 +27,9 @@ void cmdSet(Dir *root, char args[]) {
 }
 
 void cmdPrint(Dir *root) {
-	char *buffer = (char *)malloc(sizeof(char) * MAX_PATH_LEN);
+	char buffer[MAX_PATH_LEN];
 	buffer[0] = '\0';
 	printDir(root, buffer);
-	free(buffer);
 }
 
 void cmdFind(Dir *root, char path[]) {

@@ -149,7 +149,7 @@ Dir *findDir(Dir *root, DLL *path, int createIfMissing);
 void listAbcChildrenDir(Dir *dir);
 void printChildDir(void *c);
 char *searchDir(Dir *root, char value[]);
-int cmpValuesDir(void *a, void *b);
+int cmpNamesDir(void *a, void *b);
 int matchesNameDir(void *a, void *b);
 
 /* Auxiliary */

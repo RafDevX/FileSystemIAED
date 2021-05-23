@@ -28,7 +28,7 @@ Dir *newChildDir(Dir *parent, char name[]) {
 	Dir *new = newDir(name);
 	new->parent = parent;
 	pushDLL(parent->children, new);
-	parent->abcChildren = insertAVLNode(parent->abcChildren, new, cmpValuesDir);
+	parent->abcChildren = insertAVLNode(parent->abcChildren, new, cmpNamesDir);
 	return new;
 }
 
@@ -38,7 +38,7 @@ void deleteDir(Dir *dir, int topToDelete) {
 	if (dir->parent && topToDelete) {
 		removeDLL(dir->parent->children, dir, 1, NULL);
 		dir->parent->abcChildren = removeAVLNode(dir->parent->abcChildren, dir,
-												 cmpValuesDir, NULL);
+												 cmpNamesDir, NULL);
 	}
 	free(dir->children);
 	free(dir->value);
@@ -51,7 +51,7 @@ void deleteDirWrapper(void *value, void *arg) {
 		deleteDir((Dir *)value, 0);
 }
 
-void printDir(Dir *dir, char *buffer) {
+void printDir(Dir *dir, char buffer[]) {
 	int origSz = strlen(buffer);
 	if (strlen(dir->name) > 0)
 		strcat(buffer, PATH_SEPARATOR);
@@ -95,14 +95,8 @@ char *searchDir(Dir *root, char value[]) {
 	return NULL;
 }
 
-int cmpValuesDir(void *a, void *b) {
-	char *v1 = ((Dir *)a)->value, *v2 = ((Dir *)b)->value;
-	if (v1 == NULL)
-		return -1;
-	else if (v2 == NULL)
-		return 1;
-	else
-		return strcmp(v1, v2);
+int cmpNamesDir(void *a, void *b) {
+	return strcmp(((Dir *)a)->name, ((Dir *)b)->name);
 }
 
 int matchesNameDir(void *a, void *b) {
