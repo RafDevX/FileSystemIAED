@@ -49,7 +49,7 @@
 /*** Paths ***/
 
 #define ROOT_NAME ""
-#define MAX_PATH_LEN 10
+#define MAX_PATH_LEN 65529 /* MAX_INSTR_LENGTH - 6 */
 #define PATH_SEPARATOR "/"
 
 /*** Return Codes ***/
@@ -141,7 +141,7 @@ void *searchAVL(AVLNode *root, void *key, int (*cmp)(void *, void *));
 Dir *newDir(char name[]);
 Dir *newChildDir(Dir *parent, char name[]);
 void setValueDir(Dir *dir, char value[]);
-void deleteDir(Dir *dir);
+void deleteDir(Dir *dir, int topToDelete);
 void deleteDirWrapper(void *value);
 void printDir(Dir *dir);
 void printDirWrapper(void *value);

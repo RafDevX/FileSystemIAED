@@ -22,7 +22,7 @@ int main() {
 			return RETCODE_UNKNOWN_CMD;
 	}
 
-	deleteDir(root);
+	deleteDir(root, 1);
 
 	return RETCODE_OK;
 }

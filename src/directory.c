@@ -32,10 +32,10 @@ Dir *newChildDir(Dir *parent, char name[]) {
 	return new;
 }
 
-void deleteDir(Dir *dir) {
-	/*traverseDLL(dir->children, deleteDirWrapper, 1);*/
+void deleteDir(Dir *dir, int topToDelete) {
+	traverseDLL(dir->children, deleteDirWrapper, 1);
 	traverseAVL(dir->abcChildren, FREE, NULL);
-	if (dir->parent) {
+	if (dir->parent && topToDelete) {
 		removeDLL(dir->parent->children, dir, 1, NULL);
 		dir->parent->abcChildren = removeAVLNode(dir->parent->abcChildren, dir,
 												 cmpValuesDir, NULL);
@@ -47,7 +47,7 @@ void deleteDir(Dir *dir) {
 }
 
 void deleteDirWrapper(void *value) {
-	deleteDir((Dir *)value);
+	deleteDir((Dir *)value, 0);
 }
 
 void printDir(Dir *dir) { /* FIXME: */

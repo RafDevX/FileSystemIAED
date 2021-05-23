@@ -27,8 +27,10 @@ void cmdSet(Dir *root, char args[]) {
 }
 
 void cmdPrint(Dir *root) {
-	printDir(root);
-	printDir(NULL);
+	if (!!root)
+		printf("FIXME: print");
+	/*printDir(root);
+	printDir(NULL);*/
 }
 
 void cmdFind(Dir *root, char path[]) {
@@ -68,6 +70,6 @@ void cmdDelete(Dir *root, char path[]) {
 	if (dir == NULL)
 		printf("%s\n", ERR_NOT_FOUND);
 	else
-		deleteDir(dir);
+		deleteDir(dir, 1);
 	free(pathList);
 }
