@@ -12,6 +12,8 @@ Dir *newDir(char name[]) {
 	if (new == NULL)
 		return new;
 	new->name = strdup(name);
+	if (new->name == NULL)
+		return NULL;
 	new->value = NULL;
 	new->children = newDLL();
 	new->abcChildren = NULL;
@@ -19,11 +21,16 @@ Dir *newDir(char name[]) {
 	return new;
 }
 
-void setValueDir(Dir *dir, char value[]) {
+void *getValueDir(void *dir) {
+	return ((Dir *)dir)->value;
+}
+
+int setValueDir(Dir *dir, char value[]) {
 	if (dir->value) {
 		free(dir->value);
 	}
 	dir->value = strdup(value);
+	return dir->value != NULL;
 }
 
 Dir *newChildDir(Dir *parent, char name[]) {
@@ -134,8 +141,4 @@ int cmpNamesDir(void *a, void *b) {
 
 int matchesNameDir(void *a, void *b) {
 	return strcmp((char *)a, ((Dir *)b)->name) == 0;
-}
-
-void *getValueDir(void *dir) {
-	return ((Dir *)dir)->value;
 }

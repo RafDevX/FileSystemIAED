@@ -12,8 +12,9 @@ int main() {
 	Dir *root = newDir(ROOT_NAME);
 	HashT *valuesTable = newHashT(VALUES_TABLE_DIM, getValueDir, hashS);
 	char instr[MAX_INSTR_LEN], cmd[MAX_CMD_LEN];
+	enum TriageStatus status = SUCCESS;
 
-	while (fgets(instr, MAX_INSTR_LEN, stdin)) {
+	while (status == SUCCESS && fgets(instr, MAX_INSTR_LEN, stdin)) {
 		int lastPos = strlen(instr) - 1;
 		if (instr[lastPos] == '\n')
 			instr[lastPos] = '\0';
@@ -21,9 +22,13 @@ int main() {
 		if (strcmp(cmd, CMD_QUIT) == 0)
 			break;
 
-		if (!triage(root, valuesTable, cmd, instr + strlen(cmd) + 1))
-			return RETCODE_UNKNOWN_CMD;
+		status = triage(root, valuesTable, cmd, instr + strlen(cmd) + 1);
 	}
+
+	if (status == UNKNOWN_CMD)
+		return RETCODE_UNKNOWN_CMD;
+	else if (status == NO_MEMORY)
+		printf("%s\n", ERR_NO_MEMORY);
 
 	deleteDir(root, 1, 0, deleteDirNOP, NULL);
 	freeHashT(valuesTable);
@@ -32,22 +37,27 @@ int main() {
 }
 
 /* Call the appropriate function for a command. Return whether it succeeded. */
-int triage(Dir *root, HashT *valuesTable, char cmd[], char args[]) {
+enum TriageStatus triage(Dir *root, HashT *vTable, char cmd[], char args[]) {
+	int ok;
 	if (strcmp(cmd, CMD_HELP) == 0)
-		cmdHelp();
+		ok = cmdHelp();
 	else if (strcmp(cmd, CMD_SET) == 0)
-		cmdSet(root, valuesTable, args);
+		ok = cmdSet(root, vTable, args);
 	else if (strcmp(cmd, CMD_PRINT) == 0)
-		cmdPrint(root);
+		ok = cmdPrint(root);
 	else if (strcmp(cmd, CMD_FIND) == 0)
-		cmdFind(root, args);
+		ok = cmdFind(root, args);
 	else if (strcmp(cmd, CMD_LIST) == 0)
-		cmdList(root, args);
+		ok = cmdList(root, args);
 	else if (strcmp(cmd, CMD_SEARCH) == 0)
-		cmdSearch(valuesTable, args);
+		ok = cmdSearch(vTable, args);
 	else if (strcmp(cmd, CMD_DELETE) == 0)
-		cmdDelete(root, valuesTable, args);
+		ok = cmdDelete(root, vTable, args);
 	else
-		return 0;
-	return 1;
+		return UNKNOWN_CMD;
+
+	if (ok)
+		return SUCCESS;
+	else
+		return NO_MEMORY;
 }
