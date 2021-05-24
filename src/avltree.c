@@ -16,10 +16,6 @@ AVLNode *newAVLNode(void *value) {
 	return new;
 }
 
-void setValueAVLNode(AVLNode *node, void *value) {
-	node->value = value;
-}
-
 AVLNode *maxAVLNode(AVLNode *root) {
 	if (root == NULL || root->right == NULL)
 		return root;

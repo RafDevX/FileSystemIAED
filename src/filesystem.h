@@ -130,7 +130,6 @@ enum AVLTraversalType {
 /* Interfaces */
 
 DLLNode *newDLLNode();
-void setValueDLLNode(DLLNode *node, void *val);
 DLL *newDLL();
 DLLNode *pushDLL(DLL *lst, void *value);
 void removeDLL(DLL *lst, void *val, int onlyFirst, void (*freeValue)(void *));
@@ -141,7 +140,6 @@ int emptyDLL(DLL *lst);
 DLL *strToDLL(char str[], char delim[]);
 
 AVLNode *newAVLNode(void *value);
-void setValueAVLNode(AVLNode *node, void *value);
 AVLNode *maxAVLNode(AVLNode *root);
 int getHeightAVLNode(AVLNode *node);
 int calcHeightAVLNode(AVLNode *node);

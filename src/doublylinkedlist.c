@@ -15,10 +15,6 @@ DLLNode *newDLLNode() {
 	return new;
 }
 
-void setValueDLLNode(DLLNode *node, void *val) {
-	node->value = val;
-}
-
 DLL *newDLL() {
 	DLL *new = (DLL *)malloc(sizeof(DLL));
 	new->head = NULL;
