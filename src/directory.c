@@ -13,12 +13,16 @@ Dir *newDir(char name[]) {
 	if (new == NULL)
 		return new;
 	new->name = strdup(name);
-	if (new->name == NULL)
+	if (new->name == NULL) {
+		free(new);
 		return NULL;
+	}
 	new->value = NULL;
 	new->children = newDLL();
-	if (new->children == NULL)
+	if (new->children == NULL) {
+		free(new);
 		return NULL;
+	}
 	new->abcChildren = NULL;
 	new->parent = NULL;
 	return new;
