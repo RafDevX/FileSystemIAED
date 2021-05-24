@@ -7,6 +7,7 @@
 /*** Include project header file ***/
 #include "filesystem.h"
 
+/* Allocate memory for and instantiate a new DLL Node */
 DLLNode *newDLLNode() {
 	DLLNode *new = (DLLNode *)malloc(sizeof(DLLNode));
 	new->prev = NULL;
@@ -15,6 +16,7 @@ DLLNode *newDLLNode() {
 	return new;
 }
 
+/* Allocate memory for and instantiate a new DLL */
 DLL *newDLL() {
 	DLL *new = (DLL *)malloc(sizeof(DLL));
 	new->head = NULL;
@@ -22,6 +24,7 @@ DLL *newDLL() {
 	return new;
 }
 
+/* Insert a new value at the end of a DLL */
 DLLNode *pushDLL(DLL *lst, void *value) {
 	DLLNode *node = newDLLNode();
 	node->value = value;
@@ -35,6 +38,8 @@ DLLNode *pushDLL(DLL *lst, void *value) {
 	return node;
 }
 
+/* Remove nodes with a matching value from a DLL, optionally only removing the
+ * first ocurrence and invoking a callback to free the value before deletion. */
 void removeDLL(DLL *lst, void *val, int onlyFirst, void (*freeValue)(void *)) {
 	DLLNode *aux, *node = lst->head;
 	while (node) {
@@ -60,6 +65,7 @@ void removeDLL(DLL *lst, void *val, int onlyFirst, void (*freeValue)(void *)) {
 	}
 }
 
+/* Remove the first element from a DLL and return it */
 void *shiftDLL(DLL *lst) {
 	DLLNode *item = lst->head;
 	void *val = item->value;
@@ -72,6 +78,7 @@ void *shiftDLL(DLL *lst) {
 	return val;
 }
 
+/* Return the first element of a DLL that matches a given value. */
 void *firstMatchingDLL(DLL *lst, void *value, int (*matches)(void *, void *)) {
 	DLLNode *head = lst->head;
 	while (head) {
@@ -82,6 +89,8 @@ void *firstMatchingDLL(DLL *lst, void *value, int (*matches)(void *, void *)) {
 	return NULL;
 }
 
+/* Traverse a DLL in order, optionally calling a callback for each element with
+ * an argument and/or freeing nodes. */
 void traverseDLL(DLL *ls, void (*f)(void *, void *), int freeNodes, void *arg) {
 	if (ls != NULL) {
 		DLLNode *next, *head = ls->head;
@@ -96,10 +105,13 @@ void traverseDLL(DLL *ls, void (*f)(void *, void *), int freeNodes, void *arg) {
 	}
 }
 
+/* Return whether a DLL has no elements */
 int emptyDLL(DLL *lst) {
 	return lst->head == NULL;
 }
 
+/* Receive a string and a delimiter, breaking it up at each ocurrence of the
+ * delimiter and creating a DLL with each chunk as an element */
 DLL *strToDLL(char str[], char delim[]) {
 	char *token;
 	DLL *lst = newDLL();
