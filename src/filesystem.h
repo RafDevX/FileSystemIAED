@@ -226,6 +226,7 @@ char *strdup(char *s1);
 long int hashS(void *key, long int M);
 void searchAux(void *val, void *args);
 void deleteAux(Dir *dir, void *valuesTable);
+void freeWrapper(void *ptr, void *arg);
 
 /*** Commands ***/
 

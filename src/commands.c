@@ -30,6 +30,7 @@ int cmdSet(Dir *root, HashT *valuesTable, char args[]) {
 	dir = findDir(root, pathList, 1);
 	if (dir == NULL)
 		return 0;
+	traverseDLL(pathList, freeWrapper, 1, NULL);
 	free(pathList);
 	if (getValueDir(dir) != NULL)
 		removeHashT(valuesTable, dir);
@@ -51,6 +52,7 @@ int cmdFind(Dir *root, char path[]) {
 	if (pathList == NULL)
 		return 0;
 	dir = findDir(root, pathList, 0);
+	traverseDLL(pathList, freeWrapper, 1, NULL);
 	free(pathList);
 	if (dir == NULL)
 		printf(OUT_FORMAT_ERR, ERR_NOT_FOUND);
@@ -68,6 +70,7 @@ int cmdList(Dir *root, char path[]) {
 	if (pathList == NULL)
 		return 0;
 	dir = findDir(root, pathList, 0);
+	traverseDLL(pathList, freeWrapper, 1, NULL);
 	free(pathList);
 	if (dir == NULL)
 		printf(OUT_FORMAT_ERR, ERR_NOT_FOUND);
@@ -103,6 +106,7 @@ int cmdDelete(Dir *root, HashT *valuesTable, char path[]) {
 	if (pathList == NULL)
 		return 0;
 	dir = findDir(root, pathList, 0);
+	traverseDLL(pathList, freeWrapper, 1, NULL);
 	free(pathList);
 	if (dir == NULL)
 		printf(OUT_FORMAT_ERR, ERR_NOT_FOUND);

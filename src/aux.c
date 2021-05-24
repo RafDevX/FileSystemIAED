@@ -42,3 +42,10 @@ void deleteAux(Dir *dir, void *valuesTable) {
 	if (dir->value != NULL)
 		removeHashT((HashT *)valuesTable, dir);
 }
+
+/* Wrapper for a callback function; invoke free with the first argument and
+ * ignore the second argument */
+void freeWrapper(void *ptr, void *arg) {
+	if (arg || !arg) /* suppress unused variable warnings */
+		free(ptr);
+}
