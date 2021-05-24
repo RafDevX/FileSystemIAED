@@ -23,7 +23,7 @@
 #define MAX_CMD_LEN 7
 
 /* Dimension to use for the values hash table, should be prime */
-#define VALUES_TABLE_DIM 49157
+#define VALUES_TABLE_DIM 196613
 
 /* Name for the root directory */
 #define ROOT_NAME ""
