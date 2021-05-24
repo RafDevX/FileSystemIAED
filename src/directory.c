@@ -24,13 +24,17 @@ Dir *newDir(char name[]) {
 }
 
 void *getValueDir(void *dir) {
-	return ((Dir *)dir)->value;
+	if (dir == NULL)
+		return NULL;
+	else
+		return ((Dir *)dir)->value;
 }
 
 int setValueDir(Dir *dir, char value[]) {
-	if (dir->value) {
+	if (dir == NULL)
+		return 0;
+	else if (dir->value)
 		free(dir->value);
-	}
 	dir->value = strdup(value);
 	return dir->value != NULL;
 }

@@ -25,6 +25,8 @@ int cmdSet(Dir *root, HashT *valuesTable, char args[]) {
 	if (pathList == NULL)
 		return 0;
 	dir = findDir(root, pathList, 1);
+	if (dir == NULL)
+		return 0;
 	free(pathList);
 	if (getValueDir(dir) != NULL)
 		removeHashT(valuesTable, dir);
