@@ -40,6 +40,15 @@
 #define ERR_NO_DATA "no data"
 #define ERR_NO_MEMORY "No memory."
 
+/*** Command Output Formats ***/
+
+#define OUT_FORMAT_HELP_CMD "%s\n"
+#define OUT_FORMAT_PRINT_CMD "%s %s\n"
+#define OUT_FORMAT_FIND_CMD "%s\n"
+#define OUT_FORMAT_LIST_CMD "%s\n"
+#define OUT_FORMAT_SEARCH_CMD "%s\n"
+#define OUT_FORMAT_ERR "%s\n"
+
 /*** Help Text ***/
 
 #define MAX_HELP_LINE_LEN 62
@@ -178,7 +187,6 @@ char *strdup(char *s1);
 long int hashS(void *key, long int M);
 void searchAux(void *val, void *args);
 void deleteAux(Dir *dir, void *valuesTable);
-void *ssmalloc(size_t size);
 
 /* Commands */
 

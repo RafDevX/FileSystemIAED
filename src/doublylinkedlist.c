@@ -8,7 +8,7 @@
 #include "filesystem.h"
 
 DLLNode *newDLLNode() {
-	DLLNode *new = (DLLNode *)smalloc(sizeof(DLLNode));
+	DLLNode *new = (DLLNode *)malloc(sizeof(DLLNode));
 	new->prev = NULL;
 	new->next = NULL;
 	new->value = NULL;
@@ -20,7 +20,7 @@ void setValueDLLNode(DLLNode *node, void *val) {
 }
 
 DLL *newDLL() {
-	DLL *new = (DLL *)smalloc(sizeof(DLL));
+	DLL *new = (DLL *)malloc(sizeof(DLL));
 	new->head = NULL;
 	new->tail = NULL;
 	return new;

@@ -8,7 +8,7 @@
 #include "filesystem.h"
 
 Dir *newDir(char name[]) {
-	Dir *new = (Dir *)smalloc(sizeof(Dir));
+	Dir *new = (Dir *)malloc(sizeof(Dir));
 	new->name = strdup(name);
 	new->value = NULL;
 	new->children = newDLL();
@@ -75,7 +75,7 @@ void printDir(Dir *dir, char buffer[]) {
 		strcat(buffer, PATH_SEPARATOR);
 	strcat(buffer, dir->name);
 	if (dir->value)
-		printf("%s %s\n", buffer, dir->value);
+		printf(OUT_FORMAT_PRINT_CMD, buffer, dir->value);
 	traverseDLL(dir->children, printDirWrapper, 0, buffer);
 	buffer[origSz] = '\0';
 }
@@ -103,12 +103,12 @@ void listAbcChildrenDir(Dir *dir) {
 }
 
 void printChildDir(void *c) {
-	printf("%s\n", ((Dir *)c)->name);
+	printf(OUT_FORMAT_LIST_CMD, ((Dir *)c)->name);
 }
 
 char *calcPathDir(Dir *dir) {
 	char buffer[MAX_PATH_LEN] = "";
-	char *path = smalloc(sizeof(char) * MAX_PATH_LEN);
+	char *path = malloc(sizeof(char) * MAX_PATH_LEN);
 	int first = 1;
 	path[0] = '\0';
 	while (dir != NULL) {
