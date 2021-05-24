@@ -10,6 +10,8 @@
 /* Allocate memory for and instantiate a new DLL Node */
 DLLNode *newDLLNode() {
 	DLLNode *new = (DLLNode *)malloc(sizeof(DLLNode));
+	if (new == NULL)
+		return new;
 	new->prev = NULL;
 	new->next = NULL;
 	new->value = NULL;
@@ -19,6 +21,8 @@ DLLNode *newDLLNode() {
 /* Allocate memory for and instantiate a new DLL */
 DLL *newDLL() {
 	DLL *new = (DLL *)malloc(sizeof(DLL));
+	if (new == NULL)
+		return new;
 	new->head = NULL;
 	new->tail = NULL;
 	return new;
@@ -27,6 +31,8 @@ DLL *newDLL() {
 /* Insert a new value at the end of a DLL */
 DLLNode *pushDLL(DLL *lst, void *value) {
 	DLLNode *node = newDLLNode();
+	if (node == NULL)
+		return node;
 	node->value = value;
 	if (lst->head) {
 		(lst->tail)->next = node;
@@ -113,12 +119,17 @@ int emptyDLL(DLL *lst) {
 /* Receive a string and a delimiter, breaking it up at each ocurrence of the
  * delimiter and creating a DLL with each chunk as an element */
 DLL *strToDLL(char str[], char delim[]) {
-	char *token;
+	char *token, *dup;
 	DLL *lst = newDLL();
+
+	if (lst == NULL)
+		return NULL;
 
 	token = strtok(str, delim);
 	while (token != NULL) {
-		pushDLL(lst, strdup(token));
+		dup = strdup(token);
+		if (dup == NULL || pushDLL(lst, dup) == NULL)
+			return NULL;
 		token = strtok(NULL, delim);
 	}
 

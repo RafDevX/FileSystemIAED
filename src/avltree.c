@@ -10,6 +10,8 @@
 /* Allocate and return a new AVL Node */
 AVLNode *newAVLNode(void *value) {
 	AVLNode *new = (AVLNode *)malloc(sizeof(AVLNode));
+	if (new == NULL)
+		return new;
 	new->right = NULL;
 	new->left = NULL;
 	new->value = value;

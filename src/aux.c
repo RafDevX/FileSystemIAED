@@ -10,6 +10,8 @@
 /* Dupicate a string into a new(ly allocated) place in memory */
 char *strdup(char s1[]) {
 	char *s2 = (char *)malloc(sizeof(char) * (strlen(s1) + 1));
+	if (s2 == NULL)
+		return s2;
 	strcpy(s2, s1);
 	return s2;
 }

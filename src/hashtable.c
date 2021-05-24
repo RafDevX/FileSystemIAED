@@ -14,6 +14,8 @@ HashT *newHashT(long int dim, void *getKey(void *),
 	long int i;
 	HashT *table = (HashT *)malloc(sizeof(HashT));
 	DLL **entries = (DLL **)malloc(sizeof(DLL *) * dim);
+	if (table == NULL || entries == NULL)
+		return NULL;
 	for (i = 0; i < dim; i++)
 		entries[i] = newDLL();
 	table->dim = dim;
@@ -32,9 +34,9 @@ DLL *searchHashT(HashT *table, void *key) {
 }
 
 /* Insert a new value into a hash table */
-void insertHashT(HashT *table, void *value) {
+int insertHashT(HashT *table, void *value) {
 	void *key = table->getKey(value);
-	pushDLL(searchHashT(table, key), value);
+	return !!pushDLL(searchHashT(table, key), value);
 }
 
 /* Remove a given value from a hash table */

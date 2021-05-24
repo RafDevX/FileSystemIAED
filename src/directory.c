@@ -10,28 +10,42 @@
 /* Allocate memory for and instantiate a new directory */
 Dir *newDir(char name[]) {
 	Dir *new = (Dir *)malloc(sizeof(Dir));
+	if (new == NULL)
+		return new;
 	new->name = strdup(name);
+	if (new->name == NULL)
+		return NULL;
 	new->value = NULL;
 	new->children = newDLL();
+	if (new->children == NULL)
+		return NULL;
 	new->abcChildren = NULL;
 	new->parent = NULL;
 	return new;
 }
 
 /* Set the value for a directory, freeing the previous one if it exists */
-void setValueDir(Dir *dir, char value[]) {
+int setValueDir(Dir *dir, char value[]) {
+	if (dir == NULL)
+		return 0;
 	if (dir->value) {
 		free(dir->value);
+		dir->value = strdup(value);
+		return dir->value != NULL;
 	}
-	dir->value = strdup(value);
 }
 
 /* Create a new directory as a child of a Dir */
 Dir *newChildDir(Dir *parent, char name[]) {
 	Dir *new = newDir(name);
+	if (new == NULL)
+		return NULL;
 	new->parent = parent;
-	pushDLL(parent->children, new);
+	if (pushDLL(parent->children, new) == NULL)
+		return NULL;
 	parent->abcChildren = insertAVLNode(parent->abcChildren, new, cmpNamesDir);
+	if (parent->abcChildren == NULL)
+		return NULL;
 	return new;
 }
 
@@ -126,9 +140,11 @@ void printChildDir(void *c) {
 
 /* Calculate a Dir's path from root */
 char *calcPathDir(Dir *dir) {
+	int first = 1;
 	char buffer[MAX_PATH_LEN] = "";
 	char *path = malloc(sizeof(char) * MAX_PATH_LEN);
-	int first = 1;
+	if (path == NULL)
+		return path;
 	path[0] = '\0';
 	while (dir != NULL) {
 		strcpy(buffer, path);

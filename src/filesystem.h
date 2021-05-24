@@ -148,6 +148,12 @@ enum AVLTraversalType {
 	FREE
 };
 
+enum TriageStatus {
+	SUCCESS,
+	UNKNOWN_CMD,
+	NO_MEMORY
+};
+
 /*********************
  ***** Functions *****
  *********************/
@@ -190,7 +196,8 @@ void *searchAVL(AVLNode *root, void *key, int (*cmp)(void *, void *));
 
 Dir *newDir(char name[]);
 Dir *newChildDir(Dir *parent, char name[]);
-void setValueDir(Dir *dir, char value[]);
+int setValueDir(Dir *dir, char value[]);
+void *getValueDir(void *dir);
 void deleteDir(Dir *dir, int top, int skipTop,
 			   void (*callback)(Dir *, void *), void *arg);
 void deleteDirWrapper(void *value, void *arg);
@@ -203,14 +210,13 @@ void printChildDir(void *c);
 char *calcPathDir(Dir *dir);
 int cmpNamesDir(void *a, void *b);
 int matchesNameDir(void *a, void *b);
-void *getValueDir(void *dir);
 
 /* Hash Table Manipulation */
 
 HashT *newHashT(long int dim, void *getKey(void *),
 				long int (*hash)(void *, long int));
 DLL *searchHashT(HashT *table, void *key);
-void insertHashT(HashT *table, void *value);
+int insertHashT(HashT *table, void *value);
 void removeHashT(HashT *table, void *value);
 void freeHashT(HashT *table);
 
@@ -223,14 +229,14 @@ void deleteAux(Dir *dir, void *valuesTable);
 
 /*** Commands ***/
 
-void cmdHelp();
-void cmdSet(Dir *root, HashT *valuesTable, char args[]);
-void cmdPrint(Dir *root);
-void cmdFind(Dir *root, char path[]);
-void cmdList(Dir *root, char path[]);
-void cmdSearch(HashT *valuesTable, char value[]);
-void cmdDelete(Dir *root, HashT *valuesTable, char path[]);
+int cmdHelp();
+int cmdSet(Dir *root, HashT *valuesTable, char args[]);
+int cmdPrint(Dir *root);
+int cmdFind(Dir *root, char path[]);
+int cmdList(Dir *root, char path[]);
+int cmdSearch(HashT *valuesTable, char value[]);
+int cmdDelete(Dir *root, HashT *valuesTable, char path[]);
 
 /*** General ***/
 
-int triage(Dir *root, HashT *valuesTable, char cmd[], char args[]);
+enum TriageStatus triage(Dir *root, HashT *vTable, char cmd[], char args[]);
