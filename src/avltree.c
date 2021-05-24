@@ -7,6 +7,7 @@
 /*** Include project header file ***/
 #include "filesystem.h"
 
+/* Allocate and return a new AVL Node */
 AVLNode *newAVLNode(void *value) {
 	AVLNode *new = (AVLNode *)malloc(sizeof(AVLNode));
 	new->right = NULL;
@@ -16,6 +17,7 @@ AVLNode *newAVLNode(void *value) {
 	return new;
 }
 
+/* Return the node with the max value within a subtree */
 AVLNode *maxAVLNode(AVLNode *root) {
 	if (root == NULL || root->right == NULL)
 		return root;
@@ -23,12 +25,14 @@ AVLNode *maxAVLNode(AVLNode *root) {
 		return maxAVLNode(root->right);
 }
 
+/* Read height for an AVL node or 0 if no node is passed */
 int getHeightAVLNode(AVLNode *node) {
 	if (node == NULL)
 		return 0;
 	return node->height;
 }
 
+/* Calculate the height for an AVL node based on its children's height */
 int calcHeightAVLNode(AVLNode *node) {
 	int left, right;
 	left = getHeightAVLNode(node->left);
@@ -36,6 +40,7 @@ int calcHeightAVLNode(AVLNode *node) {
 	return left > right ? left + 1 : right + 1;
 }
 
+/* Execute a left rotation on an AVL node */
 AVLNode *rotLeftAVLNode(AVLNode *h) {
 	AVLNode *x = h->right;
 
@@ -47,6 +52,7 @@ AVLNode *rotLeftAVLNode(AVLNode *h) {
 	return x;
 }
 
+/* Execute a right rotation on an AVL node */
 AVLNode *rotRightAVLNode(AVLNode *h) {
 	AVLNode *x = h->left;
 
@@ -58,6 +64,7 @@ AVLNode *rotRightAVLNode(AVLNode *h) {
 	return x;
 }
 
+/* Execute a left-right rotation on an AVL node */
 AVLNode *rotLeftRightAVLNode(AVLNode *node) {
 	if (node == NULL)
 		return node;
@@ -65,6 +72,7 @@ AVLNode *rotLeftRightAVLNode(AVLNode *node) {
 	return rotRightAVLNode(node);
 }
 
+/* Execute a right-left rotation on an AVL node */
 AVLNode *rotRightLeftAVLNode(AVLNode *node) {
 	if (node == NULL)
 		return node;
@@ -72,12 +80,14 @@ AVLNode *rotRightLeftAVLNode(AVLNode *node) {
 	return rotLeftAVLNode(node);
 }
 
+/* Calculate the balance factor for an AVL node */
 int calcBalanceAVLNode(AVLNode *node) {
 	if (node == NULL)
 		return 0;
 	return getHeightAVLNode(node->left) - getHeightAVLNode(node->right);
 }
 
+/* Balance an AVL tree by performing rotation operations */
 AVLNode *balanceAVL(AVLNode *root) {
 	int balance;
 	if (root == NULL)
@@ -98,6 +108,7 @@ AVLNode *balanceAVL(AVLNode *root) {
 	return root;
 }
 
+/* Inserts a new value into an AVL tree */
 AVLNode *insertAVLNode(AVLNode *root, void *value, int (*cmp)(void *, void *)) {
 	if (root == NULL)
 		return newAVLNode(value);
@@ -108,13 +119,13 @@ AVLNode *insertAVLNode(AVLNode *root, void *value, int (*cmp)(void *, void *)) {
 	return balanceAVL(root);
 }
 
+/* Removes the AVL node with a certain value from an AVL tree; compare function
+ * should be such that (with rem being the value to remove):
+ * 		cmp(rem, A) ==  0 <=> ToRemove == A
+ * 		cmp(rem, A) ==  1 <=> ToRemove > A
+ * 		cmp(rem, A) == -1 <=> ToRemove < A */
 AVLNode *removeAVLNode(AVLNode *root, void *rem, int (*cmp)(void *, void *),
 					   void (*freeValue)(void *)) {
-	/*
-		cmp(rem, A) == 0  <=>  ToRemove == A
-		cmp(rem, A) == 1  <=>  ToRemove > A
-		cmp(rem, A) == -1 <=>  ToRemove < A
-	*/
 	int c;
 	if (root == NULL)
 		return root;
@@ -129,6 +140,7 @@ AVLNode *removeAVLNode(AVLNode *root, void *rem, int (*cmp)(void *, void *),
 	return balanceAVL(root);
 }
 
+/* Helper function to actually remove a correct node after it is found */
 AVLNode *auxRemoveAVLNode(AVLNode *root, int (*cmp)(void *, void *),
 						  void (*freeValue)(void *)) {
 	if (root->right != NULL && root->left != NULL) {
@@ -152,6 +164,7 @@ AVLNode *auxRemoveAVLNode(AVLNode *root, int (*cmp)(void *, void *),
 	return root;
 }
 
+/* Traverse an AVL Tree in a specified order, invoking a callback for each */
 void traverseAVL(AVLNode *root, enum AVLTraversalType type, void (*f)(void *)) {
 	if (root == NULL) {
 		return;
@@ -173,6 +186,7 @@ void traverseAVL(AVLNode *root, enum AVLTraversalType type, void (*f)(void *)) {
 	}
 }
 
+/* Find an element in an AVL Tree based on its value */
 void *searchAVL(AVLNode *root, void *key, int (*cmp)(void *, void *)) {
 	int c;
 	if (root == NULL)
