@@ -77,6 +77,8 @@ int cmdSearch(HashT *valuesTable, char value[]) {
 	traverseDLL(possible, searchAux, 0, auxArgs);
 	if (result != NULL) {
 		char *path = calcPathDir(result);
+		if (path == NULL)
+			return 0;
 		printf("%s\n", path);
 		free(path);
 	} else {

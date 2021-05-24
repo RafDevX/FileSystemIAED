@@ -10,8 +10,8 @@
 HashT *newHashT(long int dim, void *getKey(void *),
 				long int (*hash)(void *, long int)) {
 	long int i;
-	HashT *table = (HashT *)smalloc(sizeof(HashT));
-	DLL **entries = (DLL **)smalloc(sizeof(DLL *) * dim);
+	HashT *table = (HashT *)malloc(sizeof(HashT));
+	DLL **entries = (DLL **)malloc(sizeof(DLL *) * dim);
 	if (table == NULL || entries == NULL)
 		return NULL;
 	for (i = 0; i < dim; i++)

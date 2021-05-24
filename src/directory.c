@@ -8,7 +8,7 @@
 #include "filesystem.h"
 
 Dir *newDir(char name[]) {
-	Dir *new = (Dir *)smalloc(sizeof(Dir));
+	Dir *new = (Dir *)malloc(sizeof(Dir));
 	if (new == NULL)
 		return new;
 	new->name = strdup(name);
@@ -16,6 +16,8 @@ Dir *newDir(char name[]) {
 		return NULL;
 	new->value = NULL;
 	new->children = newDLL();
+	if (new->children == NULL)
+		return NULL;
 	new->abcChildren = NULL;
 	new->parent = NULL;
 	return new;
@@ -35,9 +37,14 @@ int setValueDir(Dir *dir, char value[]) {
 
 Dir *newChildDir(Dir *parent, char name[]) {
 	Dir *new = newDir(name);
+	if (new == NULL)
+		return NULL;
 	new->parent = parent;
-	pushDLL(parent->children, new);
+	if (pushDLL(parent->children, new) == NULL)
+		return NULL;
 	parent->abcChildren = insertAVLNode(parent->abcChildren, new, cmpNamesDir);
+	if (parent->abcChildren == NULL)
+		return NULL;
 	return new;
 }
 
@@ -118,7 +125,7 @@ void printChildDir(void *c) {
 char *calcPathDir(Dir *dir) {
 	int first = 1;
 	char buffer[MAX_PATH_LEN] = "";
-	char *path = smalloc(sizeof(char) * MAX_PATH_LEN);
+	char *path = malloc(sizeof(char) * MAX_PATH_LEN);
 	if (path == NULL)
 		return path;
 	path[0] = '\0';

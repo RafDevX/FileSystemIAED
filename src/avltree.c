@@ -8,7 +8,7 @@
 #include "filesystem.h"
 
 AVLNode *newAVLNode(void *value) {
-	AVLNode *new = (AVLNode *)smalloc(sizeof(AVLNode));
+	AVLNode *new = (AVLNode *)malloc(sizeof(AVLNode));
 	if (new == NULL)
 		return new;
 	new->right = NULL;
