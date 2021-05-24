@@ -16,14 +16,27 @@
 
 /*** General Settings ***/
 
-#define MAX_INSTR_LEN 65536 /* +1 for \0 */
-#define MAX_CMD_LEN 7		/* +1 for \0 */
+/* Max possible length for instructions, including trailing \0 */
+#define MAX_INSTR_LEN 65536
+
+/* Max possible command length, including trailing \0 */
+#define MAX_CMD_LEN 7
+
+/* Dimension to use for the values hash table, should be prime */
 #define VALUES_TABLE_DIM 49157
+
+/* Name for the root directory */
 #define ROOT_NAME ""
-#define MAX_PATH_LEN 65530 /* MAX_INSTR_LEN - 6 */
+
+/* Max possible path len, probably MAX_INSTR_LEN - 6 */
+#define MAX_PATH_LEN 65530
+
+/* String to use to separate path components */
 #define PATH_SEPARATOR "/"
 
 /*** Commands ***/
+
+/* Available commands */
 
 #define CMD_QUIT "quit"
 #define CMD_HELP "help"
@@ -36,22 +49,31 @@
 
 /*** Errors Messages ***/
 
+/* User-oriented error messages */
+
 #define ERR_NOT_FOUND "not found"
 #define ERR_NO_DATA "no data"
 #define ERR_NO_MEMORY "No memory."
 
 /*** Command Output Formats ***/
 
+/* Output format strings for each command */
+
 #define OUT_FORMAT_HELP_CMD "%s\n"
 #define OUT_FORMAT_PRINT_CMD "%s %s\n"
 #define OUT_FORMAT_FIND_CMD "%s\n"
 #define OUT_FORMAT_LIST_CMD "%s\n"
 #define OUT_FORMAT_SEARCH_CMD "%s\n"
+
+/* Output format for error messages */
 #define OUT_FORMAT_ERR "%s\n"
 
 /*** Help Text ***/
 
+/* Max possible length for each help line */
 #define MAX_HELP_LINE_LEN 62
+
+/* Array of all help lines to output with the help command */
 #define HELP_LINES                                                     \
 	{ "help: Imprime os comandos disponíveis.",                        \
 	  "quit: Termina o programa.",                                     \
@@ -64,6 +86,8 @@
 
 /*** Return Codes ***/
 
+/* Possible program exit codes */
+
 #define RETCODE_OK 0
 #define RETCODE_UNKNOWN_CMD 1
 
@@ -71,7 +95,7 @@
  ***** Custom Types *****
  ************************/
 
-/* Doubly-Linked List */
+/*** Doubly-Linked List ***/
 
 typedef struct DLLN {
 	void *value;
@@ -84,7 +108,7 @@ typedef struct {
 	DLLNode *tail;
 } DLL;
 
-/* AVL Tree */
+/*** AVL Tree ***/
 
 typedef struct AVLN {
 	void *value;
@@ -93,7 +117,7 @@ typedef struct AVLN {
 	struct AVLN *left;
 } AVLNode;
 
-/* Directory */
+/*** Directory ***/
 
 typedef struct DN {
 	char *name;
@@ -103,7 +127,7 @@ typedef struct DN {
 	struct DN *parent;
 } Dir;
 
-/* Hash Table */
+/*** Hash Table ***/
 
 typedef struct {
 	long int dim;
@@ -116,6 +140,7 @@ typedef struct {
  ***** Enums *****
  *****************/
 
+/* How to traverse an AVL Tree */
 enum AVLTraversalType {
 	PRE_ORDER,
 	IN_ORDER,
@@ -127,7 +152,9 @@ enum AVLTraversalType {
  ***** Functions *****
  *********************/
 
-/* Interfaces */
+/*** Interfaces ***/
+
+/* Doubly-Linked List Manipulation */
 
 DLLNode *newDLLNode();
 DLL *newDLL();
@@ -138,6 +165,8 @@ void *firstMatchingDLL(DLL *lst, void *value, int (*matches)(void *, void *));
 void traverseDLL(DLL *lst, void (*f)(void *, void *), int freeNodes, void *arg);
 int emptyDLL(DLL *lst);
 DLL *strToDLL(char str[], char delim[]);
+
+/* AVL Tree Manipulation */
 
 AVLNode *newAVLNode(void *value);
 AVLNode *maxAVLNode(AVLNode *root);
@@ -157,6 +186,8 @@ AVLNode *auxRemoveAVLNode(AVLNode *root, int (*cmp)(void *, void *),
 void traverseAVL(AVLNode *root, enum AVLTraversalType type, void (*f)(void *));
 void *searchAVL(AVLNode *root, void *key, int (*cmp)(void *, void *));
 
+/* Directory Manipulation */
+
 Dir *newDir(char name[]);
 Dir *newChildDir(Dir *parent, char name[]);
 void setValueDir(Dir *dir, char value[]);
@@ -174,6 +205,8 @@ int cmpNamesDir(void *a, void *b);
 int matchesNameDir(void *a, void *b);
 void *getValueDir(void *dir);
 
+/* Hash Table Manipulation */
+
 HashT *newHashT(long int dim, void *getKey(void *),
 				long int (*hash)(void *, long int));
 DLL *searchHashT(HashT *table, void *key);
@@ -181,14 +214,14 @@ void insertHashT(HashT *table, void *value);
 void removeHashT(HashT *table, void *value);
 void freeHashT(HashT *table);
 
-/* Auxiliary */
+/*** Auxiliary ***/
 
 char *strdup(char *s1);
 long int hashS(void *key, long int M);
 void searchAux(void *val, void *args);
 void deleteAux(Dir *dir, void *valuesTable);
 
-/* Commands */
+/*** Commands ***/
 
 void cmdHelp();
 void cmdSet(Dir *root, HashT *valuesTable, char args[]);
@@ -198,6 +231,6 @@ void cmdList(Dir *root, char path[]);
 void cmdSearch(HashT *valuesTable, char value[]);
 void cmdDelete(Dir *root, HashT *valuesTable, char path[]);
 
-/* General */
+/*** General ***/
 
 int triage(Dir *root, HashT *valuesTable, char cmd[], char args[]);
