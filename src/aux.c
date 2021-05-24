@@ -46,6 +46,6 @@ void deleteAux(Dir *dir, void *valuesTable) {
 /* Wrapper for a callback function; invoke free with the first argument and
  * ignore the second argument */
 void freeWrapper(void *ptr, void *arg) {
-	if (arg || !arg) /* suppress unused variable warnings */
+	if (arg == NULL) /* suppress unused variable warnings */
 		free(ptr);
 }
