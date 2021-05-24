@@ -33,9 +33,9 @@ DLL *searchHashT(HashT *table, void *key) {
 	return lst;
 }
 
-void insertHashT(HashT *table, void *value) {
+int insertHashT(HashT *table, void *value) {
 	void *key = table->getKey(value);
-	pushDLL(searchHashT(table, key), value);
+	return !!pushDLL(searchHashT(table, key), value);
 }
 
 void removeHashT(HashT *table, void *value) {

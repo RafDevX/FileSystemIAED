@@ -174,7 +174,7 @@ int matchesNameDir(void *a, void *b);
 HashT *newHashT(long int dim, void *getKey(void *),
 				long int (*hash)(void *, long int));
 DLL *searchHashT(HashT *table, void *key);
-void insertHashT(HashT *table, void *value);
+int insertHashT(HashT *table, void *value);
 void removeHashT(HashT *table, void *value);
 void freeHashT(HashT *table);
 

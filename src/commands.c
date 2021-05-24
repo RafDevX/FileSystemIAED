@@ -22,6 +22,8 @@ int cmdSet(Dir *root, HashT *valuesTable, char args[]) {
 	sscanf(args, "%s", path);
 	value = args + strlen(path) + 1;
 	pathList = strToDLL(path, PATH_SEPARATOR);
+	if (pathList == NULL)
+		return 0;
 	dir = findDir(root, pathList, 1);
 	free(pathList);
 	if (getValueDir(dir) != NULL)
