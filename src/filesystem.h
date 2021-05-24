@@ -34,10 +34,11 @@
 #define CMD_SEARCH "search"
 #define CMD_DELETE "delete"
 
-/*** Command Errors ***/
+/*** Errors Messages ***/
 
 #define ERR_NOT_FOUND "not found"
 #define ERR_NO_DATA "no data"
+#define ERR_NO_MEMORY "No memory."
 
 /*** Help Text ***/
 
@@ -177,6 +178,7 @@ char *strdup(char *s1);
 long int hashS(void *key, long int M);
 void searchAux(void *val, void *args);
 void deleteAux(Dir *dir, void *valuesTable);
+void *ssmalloc(size_t size);
 
 /* Commands */
 

@@ -8,7 +8,7 @@
 #include "filesystem.h"
 
 char *strdup(char s1[]) {
-	char *s2 = (char *)malloc(sizeof(char) * (strlen(s1) + 1));
+	char *s2 = (char *)smalloc(sizeof(char) * (strlen(s1) + 1));
 	strcpy(s2, s1);
 	return s2;
 }
@@ -33,4 +33,11 @@ void searchAux(void *val, void *args) {
 void deleteAux(Dir *dir, void *valuesTable) {
 	if (dir->value != NULL)
 		removeHashT((HashT *)valuesTable, dir);
+}
+
+void *smalloc(size_t size) {
+	void *result = malloc(size);
+	if (result == NULL)
+		printf("%s\n", ERR_NO_MEMORY);
+	return result;
 }

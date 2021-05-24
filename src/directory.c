@@ -8,7 +8,7 @@
 #include "filesystem.h"
 
 Dir *newDir(char name[]) {
-	Dir *new = (Dir *)malloc(sizeof(Dir));
+	Dir *new = (Dir *)smalloc(sizeof(Dir));
 	new->name = strdup(name);
 	new->value = NULL;
 	new->children = newDLL();
@@ -108,7 +108,7 @@ void printChildDir(void *c) {
 
 char *calcPathDir(Dir *dir) {
 	char buffer[MAX_PATH_LEN] = "";
-	char *path = malloc(sizeof(char) * MAX_PATH_LEN);
+	char *path = smalloc(sizeof(char) * MAX_PATH_LEN);
 	int first = 1;
 	path[0] = '\0';
 	while (dir != NULL) {
