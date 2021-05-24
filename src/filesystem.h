@@ -154,6 +154,8 @@ AVLNode *balanceAVL(AVLNode *root);
 AVLNode *insertAVLNode(AVLNode *root, void *value, int (*cmp)(void *, void *));
 AVLNode *removeAVLNode(AVLNode *root, void *rem, int (*cmp)(void *, void *),
 					   void (*freeValue)(void *));
+AVLNode *auxRemoveAVLNode(AVLNode *root, int (*cmp)(void *, void *),
+						  void (*freeValue)(void *));
 void traverseAVL(AVLNode *root, enum AVLTraversalType type, void (*f)(void *));
 void *searchAVL(AVLNode *root, void *key, int (*cmp)(void *, void *));
 

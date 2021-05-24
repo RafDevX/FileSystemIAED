@@ -128,26 +128,32 @@ AVLNode *removeAVLNode(AVLNode *root, void *rem, int (*cmp)(void *, void *),
 	} else if (c > 0) {
 		root->right = removeAVLNode(root->right, rem, cmp, freeValue);
 	} else {
-		if (root->right != NULL && root->left != NULL) {
-			AVLNode *max = maxAVLNode(root->left);
-			void *aux = max->value;
-			max->value = root->value;
-			root->value = aux;
-			root->left = removeAVLNode(root->left, max->value, cmp, freeValue);
-		} else {
-			AVLNode *aux = root;
-			if (root->right == NULL && root->left == NULL)
-				root = NULL;
-			else if (root->right == NULL)
-				root = root->left;
-			else
-				root = root->right;
-			if (freeValue != NULL)
-				freeValue(aux->value);
-			free(aux);
-		}
+		root = auxRemoveAVLNode(root, cmp, freeValue);
 	}
 	return balanceAVL(root);
+}
+
+AVLNode *auxRemoveAVLNode(AVLNode *root, int (*cmp)(void *, void *),
+						  void (*freeValue)(void *)) {
+	if (root->right != NULL && root->left != NULL) {
+		AVLNode *max = maxAVLNode(root->left);
+		void *aux = max->value;
+		max->value = root->value;
+		root->value = aux;
+		root->left = removeAVLNode(root->left, max->value, cmp, freeValue);
+	} else {
+		AVLNode *aux = root;
+		if (root->right == NULL && root->left == NULL)
+			root = NULL;
+		else if (root->right == NULL)
+			root = root->left;
+		else
+			root = root->right;
+		if (freeValue != NULL)
+			freeValue(aux->value);
+		free(aux);
+	}
+	return root;
 }
 
 void traverseAVL(AVLNode *root, enum AVLTraversalType type, void (*f)(void *)) {
