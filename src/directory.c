@@ -7,6 +7,7 @@
 /*** Include project header file ***/
 #include "filesystem.h"
 
+/* Allocate memory for and instantiate a new directory */
 Dir *newDir(char name[]) {
 	Dir *new = (Dir *)malloc(sizeof(Dir));
 	new->name = strdup(name);
@@ -17,6 +18,7 @@ Dir *newDir(char name[]) {
 	return new;
 }
 
+/* Set the value for a directory, freeing the previous one if it exists */
 void setValueDir(Dir *dir, char value[]) {
 	if (dir->value) {
 		free(dir->value);
@@ -24,6 +26,7 @@ void setValueDir(Dir *dir, char value[]) {
 	dir->value = strdup(value);
 }
 
+/* Create a new directory as a child of a Dir */
 Dir *newChildDir(Dir *parent, char name[]) {
 	Dir *new = newDir(name);
 	new->parent = parent;
@@ -32,6 +35,11 @@ Dir *newChildDir(Dir *parent, char name[]) {
 	return new;
 }
 
+/* Delete (and free) a directory and its children; top should be 1 if the Dir is
+ * the top one to delete, skipTop should be 1 if the top directory should not be
+ * deleted (but its children should), newCback should be used to set a new
+ * callback function that will be invoked for each Dir before it is deleted and
+ * arg will be passed as an argument to the set callback function */
 void deleteDir(Dir *dir, int top, int skipTop,
 			   void (*newCback)(Dir *, void *), void *arg) {
 	static void (*callback)(Dir *, void *) = NULL;
@@ -58,10 +66,14 @@ void deleteDir(Dir *dir, int top, int skipTop,
 	}
 }
 
+/* Wrapper for deleteDir to facilitate using both traversal and recursion */
 void deleteDirWrapper(void *value, void *arg) {
 	deleteDir((Dir *)value, 0, 0, NULL, arg);
 }
 
+/* Stub function to be used as "no operation", to be passed as the newCback
+ * argument of the deleteDir function in order to clear the previously set
+ * callback, since NULL would just maintain the current value. */
 void deleteDirNOP(Dir *a, void *b) {
 	if (a && b) { /* suppress unused variables warning */
 
@@ -69,6 +81,7 @@ void deleteDirNOP(Dir *a, void *b) {
 	};
 }
 
+/* Recursively output a Dir (only if it has a value) and its children */
 void printDir(Dir *dir, char buffer[]) {
 	int origSz = strlen(buffer);
 	if (strlen(dir->name) > 0)
@@ -80,10 +93,13 @@ void printDir(Dir *dir, char buffer[]) {
 	buffer[origSz] = '\0';
 }
 
+/* Wrapper to facilitate both traversal and recursion with printDir */
 void printDirWrapper(void *value, void *arg) {
 	printDir((Dir *)value, (char *)arg);
 }
 
+/* Find a Dir by following a path from a root Dir, optionally creating it if it
+ * is missing. NOTE: The DLL passed as *path will be modified! */
 Dir *findDir(Dir *root, DLL *path, int createIfMissing) {
 	char *cur;
 	Dir *dir;
@@ -98,14 +114,17 @@ Dir *findDir(Dir *root, DLL *path, int createIfMissing) {
 	return findDir(dir, path, createIfMissing);
 }
 
+/* Output a Dir's children in ASCII order */
 void listAbcChildrenDir(Dir *dir) {
 	traverseAVL(dir->abcChildren, IN_ORDER, printChildDir);
 }
 
+/* Helper function for traversal; actually output a child */
 void printChildDir(void *c) {
 	printf(OUT_FORMAT_LIST_CMD, ((Dir *)c)->name);
 }
 
+/* Calculate a Dir's path from root */
 char *calcPathDir(Dir *dir) {
 	char buffer[MAX_PATH_LEN] = "";
 	char *path = malloc(sizeof(char) * MAX_PATH_LEN);
@@ -124,14 +143,18 @@ char *calcPathDir(Dir *dir) {
 	return path;
 }
 
+/* Wrapper for strcmp for two Dirs' "name" field */
 int cmpNamesDir(void *a, void *b) {
 	return strcmp(((Dir *)a)->name, ((Dir *)b)->name);
 }
 
+/* Return whether the first argument is an identical string to the second
+ * argument (a Dir)'s "name" field". */
 int matchesNameDir(void *a, void *b) {
 	return strcmp((char *)a, ((Dir *)b)->name) == 0;
 }
 
+/* Cast an argument to Dir and return its value. */
 void *getValueDir(void *dir) {
 	return ((Dir *)dir)->value;
 }
