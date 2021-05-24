@@ -28,11 +28,10 @@ Dir *newDir(char name[]) {
 int setValueDir(Dir *dir, char value[]) {
 	if (dir == NULL)
 		return 0;
-	if (dir->value) {
+	if (dir->value)
 		free(dir->value);
-		dir->value = strdup(value);
-		return dir->value != NULL;
-	}
+	dir->value = strdup(value);
+	return dir->value != NULL;
 }
 
 /* Create a new directory as a child of a Dir */

@@ -13,6 +13,7 @@ int cmdHelp() {
 	int i;
 	for (i = 0; i < (int)(sizeof(lines) / sizeof(lines[0])); i++)
 		printf(OUT_FORMAT_HELP_CMD, lines[i]);
+	return 1;
 }
 
 /* Add or modify a Directory from a path and value, adding to the values hash

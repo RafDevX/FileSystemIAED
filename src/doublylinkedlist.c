@@ -119,7 +119,7 @@ int emptyDLL(DLL *lst) {
 /* Receive a string and a delimiter, breaking it up at each ocurrence of the
  * delimiter and creating a DLL with each chunk as an element */
 DLL *strToDLL(char str[], char delim[]) {
-	char *token, *dup;
+	char *token;
 	DLL *lst = newDLL();
 
 	if (lst == NULL)
@@ -127,7 +127,7 @@ DLL *strToDLL(char str[], char delim[]) {
 
 	token = strtok(str, delim);
 	while (token != NULL) {
-		dup = strdup(token);
+		char *dup = strdup(token);
 		if (dup == NULL || pushDLL(lst, dup) == NULL)
 			return NULL;
 		token = strtok(NULL, delim);
