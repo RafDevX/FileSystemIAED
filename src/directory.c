@@ -9,6 +9,8 @@
 
 Dir *newDir(char name[]) {
 	Dir *new = (Dir *)smalloc(sizeof(Dir));
+	if (new == NULL)
+		return new;
 	new->name = strdup(name);
 	new->value = NULL;
 	new->children = newDLL();
@@ -107,9 +109,11 @@ void printChildDir(void *c) {
 }
 
 char *calcPathDir(Dir *dir) {
+	int first = 1;
 	char buffer[MAX_PATH_LEN] = "";
 	char *path = smalloc(sizeof(char) * MAX_PATH_LEN);
-	int first = 1;
+	if (path == NULL)
+		return path;
 	path[0] = '\0';
 	while (dir != NULL) {
 		strcpy(buffer, path);

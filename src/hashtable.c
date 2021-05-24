@@ -12,6 +12,8 @@ HashT *newHashT(long int dim, void *getKey(void *),
 	long int i;
 	HashT *table = (HashT *)smalloc(sizeof(HashT));
 	DLL **entries = (DLL **)smalloc(sizeof(DLL *) * dim);
+	if (table == NULL || entries == NULL)
+		return NULL;
 	for (i = 0; i < dim; i++)
 		entries[i] = NULL;
 	table->dim = dim;

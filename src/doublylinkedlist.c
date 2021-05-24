@@ -9,6 +9,8 @@
 
 DLLNode *newDLLNode() {
 	DLLNode *new = (DLLNode *)smalloc(sizeof(DLLNode));
+	if (new == NULL)
+		return new;
 	new->prev = NULL;
 	new->next = NULL;
 	new->value = NULL;
@@ -21,6 +23,8 @@ void setValueDLLNode(DLLNode *node, void *val) {
 
 DLL *newDLL() {
 	DLL *new = (DLL *)smalloc(sizeof(DLL));
+	if (new == NULL)
+		return new;
 	new->head = NULL;
 	new->tail = NULL;
 	return new;
